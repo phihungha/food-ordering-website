@@ -13,8 +13,8 @@ datasource db {
 model User {
   id             Int        @id @default(autoincrement())
   name           String
-  email          String
-  phoneNumber    String
+  email          String     @unique
+  phoneNumber    String     @unique
   customers      Customer[]
   employees      Employee[]
   hashedPassword String
@@ -35,21 +35,20 @@ model Customer {
 
 model Product {
   id           Int             @id @default(autoincrement())
-  name         String
-  imageUrl     String
+  name         String          @unique
   category     ProductCategory @relation(fields: [categoryId], references: [id])
   categoryId   Int
   price        Decimal         @db.Money
   unit         String
-  AdditionDate DateTime        @default(now())
+  additionDate DateTime        @default(now())
   orders       OrderItem[]
   carts        CartItem[]
-  BuyCount     Int             @default(0)
+  buyCount     Int             @default(0)
 }
 
 model ProductCategory {
   id       Int       @id @default(autoincrement())
-  name     String
+  name     String    @unique
   products Product[]
 }
 
@@ -68,8 +67,9 @@ model Order {
   customer     Customer    @relation(fields: [customerId], references: [id])
   customerId   Int
   creationTime DateTime    @default(now())
+  finishedTime DateTime?
   items        OrderItem[]
-  status       OrderStatus
+  status       OrderStatus @default(PENDING)
   totalAmount  Decimal     @db.Money
 }
 
