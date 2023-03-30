@@ -11,15 +11,15 @@ import { PrismaModule } from 'nestjs-prisma';
 
 @Module({
   imports: [
+    PrismaModule.forRoot({
+      isGlobal: true,
+    }),
     ProductsModule,
     OrdersModule,
     UsersModule,
     CustomersModule,
     EmployeesModule,
     CartsModule,
-    PrismaModule.forRoot({
-      isGlobal: true,
-    }),
   ],
   controllers: [AppController],
   providers: [AppService],
