@@ -11,6 +11,82 @@ datasource db {
 }
 
 model User {
-  id   Int    @id @default(autoincrement())
-  name String
+  id             Int        @id @default(autoincrement())
+  name           String
+  email          String
+  phoneNumber    String
+  customers      Customer[]
+  employees      Employee[]
+  hashedPassword String
+  salt           String
+}
+
+model Employee {
+  id   Int  @id
+  user User @relation(fields: [id], references: [id])
+}
+
+model Customer {
+  id        Int        @id
+  user      User       @relation(fields: [id], references: [id])
+  orders    Order[]
+  cartItems CartItem[]
+}
+
+model Product {
+  id           Int             @id @default(autoincrement())
+  name         String
+  imageUrl     String
+  category     ProductCategory @relation(fields: [categoryId], references: [id])
+  categoryId   Int
+  price        Decimal         @db.Money
+  unit         String
+  AdditionDate DateTime        @default(now())
+  orders       OrderItem[]
+  carts        CartItem[]
+  BuyCount     Int             @default(0)
+}
+
+model ProductCategory {
+  id       Int       @id @default(autoincrement())
+  name     String
+  products Product[]
+}
+
+model CartItem {
+  customer   Customer @relation(fields: [customerId], references: [id])
+  customerId Int
+  product    Product  @relation(fields: [productId], references: [id])
+  productId  Int
+  quantity   Int
+
+  @@id([customerId, productId])
+}
+
+model Order {
+  id           Int         @id @default(autoincrement())
+  customer     Customer    @relation(fields: [customerId], references: [id])
+  customerId   Int
+  creationTime DateTime    @default(now())
+  items        OrderItem[]
+  status       OrderStatus
+  totalAmount  Decimal     @db.Money
+}
+
+model OrderItem {
+  order     Order   @relation(fields: [orderId], references: [id])
+  orderId   Int
+  product   Product @relation(fields: [productId], references: [id])
+  productId Int
+  quantity  Int
+  unitPrice Decimal @db.Money
+  itemPrice Decimal @db.Money
+
+  @@id([orderId, productId])
+}
+
+enum OrderStatus {
+  PENDING
+  COMPLETED
+  CANCELED
 }
