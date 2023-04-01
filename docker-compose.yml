@@ -21,4 +21,4 @@ services:
 
 volumes:
   nest-postgres:
-    name: ${VOLUME_NAME}
+    name: ${VOLUME_NAME:-fos-postgres-data}

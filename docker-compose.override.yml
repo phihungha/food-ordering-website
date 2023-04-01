@@ -4,10 +4,15 @@ services:
       target: development
     environment:
       - DATABASE_URL=postgresql://app:app@nest-postgres:5432/app?schema=public
+    ports:
+      # Port for debugging
+      - 9229:9229
     volumes:
       - ./:/app
       - /app/node_modules
-    command: npm run start:dev
+    command: >
+      sh -c " npm run migrate:dev &&
+              npm run start:debug"
 
   nest-postgres:
     environment:
