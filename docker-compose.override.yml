@@ -1,0 +1,16 @@
+services:
+  nest-server:
+    build:
+      target: development
+    environment:
+      - DATABASE_URL=postgresql://app:app@nest-postgres:5432/app?schema=public
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    command: npm run start:dev
+
+  nest-postgres:
+    environment:
+      - POSTGRES_USER=app
+      - POSTGRES_PASSWORD=app
+      - POSTGRES_DB=app

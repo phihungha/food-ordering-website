@@ -1,0 +1,8 @@
+services:
+  nest-server:
+    env_file:
+      - .env
+
+  nest-postgres:
+    env_file:
+      - .env
