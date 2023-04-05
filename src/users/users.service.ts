@@ -4,10 +4,10 @@ import { PrismaService } from 'nestjs-prisma';
 
 @Injectable()
 export class UsersService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prismaService: PrismaService) {}
 
   async getUser(email: string): Promise<User | null> {
-    return await this.prisma.user.findUnique({
+    return await this.prismaService.user.findUnique({
       where: {
         email,
       },
