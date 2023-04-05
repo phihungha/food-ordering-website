@@ -1,8 +1,10 @@
 services:
   nest-server:
+    restart: always
     env_file:
       - .env
 
-  nest-postgres:
+  postgres-db:
+    restart: always
     env_file:
       - .env
