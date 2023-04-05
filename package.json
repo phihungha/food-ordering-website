@@ -3,28 +3,27 @@
   "version": "0.0.1",
   "description": "",
   "author": "",
-  "private": true,
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" \"src/public/**/*.{css,js}\"",
+    "format": "prettier --write .",
+    "format-check": "prettier --check .",
+    "lint": "eslint \"{src,test}/**/*.ts\" --cache --fix",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug 0.0.0.0:9229 --watch",
     "start:prod": "node dist/main",
-    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --cache --fix",
-    "format-check": "prettier --check \"src/**/*.ts\" \"test/**/*.ts\" \"src/public/**/*.{css,js}\"",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "migrate:dev": "npx prisma migrate dev",
-    "migrate:dev:create": "npx prisma migrate dev --create-only",
-    "migrate:deploy": "npx prisma migrate deploy",
-    "prisma:generate": "npx prisma generate",
-    "prisma:studio": "npx prisma studio",
-    "prisma:seed": "npx prisma db seed",
+    "migrate:dev": "prisma migrate dev",
+    "migrate:dev:create": "prisma migrate dev --create-only",
+    "migrate:deploy": "prisma migrate deploy",
+    "prisma:generate": "prisma generate",
+    "prisma:studio": "prisma studio",
+    "prisma:seed": "prisma db seed",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -88,6 +87,6 @@
       "npm run format",
       "npm run lint"
     ],
-    "*.{json,css,md}": "npm run format"
+    "*.{json,css,md,yml}": "npm run format"
   }
 }
