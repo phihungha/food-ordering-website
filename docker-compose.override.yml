@@ -3,7 +3,7 @@ services:
     build:
       target: build
     environment:
-      - DATABASE_URL=postgresql://app:app@nest-postgres:5432/app?schema=public
+      - DATABASE_URL=postgresql://app:app@postgres-db:5432/app?schema=public
     ports:
       # Port for debugging
       - 9229:9229
