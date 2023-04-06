@@ -1,4 +1,9 @@
-import { OrderStatus, PrismaClient } from '@prisma/client';
+import {
+  EmployeeType,
+  OrderStatus,
+  PrismaClient,
+  UserType,
+} from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -10,6 +15,7 @@ async function main() {
           name: 'Nguyễn Văn A',
           email: 'nguyenvana@gmail.com',
           phoneNumber: '0123456789',
+          type: UserType.Customer,
           hashedPassword: '1234',
           salt: '',
         },
@@ -24,10 +30,12 @@ async function main() {
           name: 'Nguyễn Đơn Hàng',
           email: 'nguyendonhang@gmail.com',
           phoneNumber: '012342322',
+          type: UserType.Employee,
           hashedPassword: '1234',
           salt: '',
         },
       },
+      type: EmployeeType.OrderManager,
     },
   });
 
@@ -100,6 +108,7 @@ async function main() {
           },
         ],
       },
+      status: OrderStatus.Pending,
       totalAmount: 28000,
     },
   });
@@ -119,7 +128,7 @@ async function main() {
       },
       totalAmount: 16000,
       finishedTime: new Date(),
-      status: OrderStatus.COMPLETED,
+      status: OrderStatus.Completed,
     },
   });
 
