@@ -12,6 +12,10 @@ export class UsersService {
       where: {
         id,
       },
+      include: {
+        customer: true,
+        employee: true,
+      },
     });
   }
 
@@ -19,6 +23,10 @@ export class UsersService {
     return await this.prismaService.user.findUnique({
       where: {
         email,
+      },
+      include: {
+        customer: true,
+        employee: true,
       },
     });
   }
