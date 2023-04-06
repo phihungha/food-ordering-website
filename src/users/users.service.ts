@@ -6,7 +6,15 @@ import { PrismaService } from 'nestjs-prisma';
 export class UsersService {
   constructor(private prismaService: PrismaService) {}
 
-  async getUser(email: string): Promise<User | null> {
+  async getUserById(id: number): Promise<User | null> {
+    return await this.prismaService.user.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
+
+  async getUserByEmail(email: string): Promise<User | null> {
     return await this.prismaService.user.findUnique({
       where: {
         email,
