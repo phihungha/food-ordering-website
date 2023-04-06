@@ -3,6 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/users/users.service';
 import { AuthResponseDto } from './auth-response.dto';
 import { User } from '@prisma/client';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -13,8 +14,14 @@ export class AuthService {
 
   async validateUser(email: string, password: string): Promise<User | null> {
     const user = await this.usersService.getUserByEmail(email);
-    if (password === user?.hashedPassword) {
-      return user;
+    if (user) {
+      const isPasswordCorrect = await bcrypt.compare(
+        password,
+        user.hashedPassword,
+      );
+      if (isPasswordCorrect) {
+        return user;
+      }
     }
     return null;
   }

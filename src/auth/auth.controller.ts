@@ -5,12 +5,12 @@ import { AuthService } from './auth.service';
 import { AuthResponseDto } from './auth-response.dto';
 import { User } from '@prisma/client';
 
-@Controller('auth')
+@Controller('login')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
   @UseGuards(LocalAuthGuard)
-  @Post('login')
+  @Post()
   async login(@Req() req: Request): Promise<AuthResponseDto> {
     return this.authService.generateJwt(req.user as User);
   }

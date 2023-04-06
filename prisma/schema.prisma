@@ -21,7 +21,6 @@ model User {
   employee Employee?
 
   hashedPassword String
-  salt           String
 }
 
 enum UserType {
