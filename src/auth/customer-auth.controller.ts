@@ -1,8 +1,17 @@
-import { Controller, Get, Post, Render, Req, UseGuards } from '@nestjs/common';
-import { Request } from 'express';
+import {
+  Controller,
+  Get,
+  Post,
+  Query,
+  Redirect,
+  Render,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
+import { Request, Response } from 'express';
 import { LocalAuthGuard } from './local-auth.guard';
 import { AuthService } from './auth.service';
-import { AuthResponseDto } from './auth-response.dto';
 import { User } from '@prisma/client';
 
 @Controller('login')
@@ -11,13 +20,15 @@ export class CustomerAuthController {
 
   @Get()
   @Render('login')
-  async getLogin() {
-    return { title: 'Đăng nhập ABC' };
+  async getLogin(@Query('signupSucceed') signupSucceed: boolean) {
+    return { title: 'Đăng nhập ABC', signupSucceed };
   }
 
   @UseGuards(LocalAuthGuard)
   @Post()
-  async login(@Req() req: Request): Promise<AuthResponseDto> {
-    return this.authService.generateJwt(req.user as User);
+  @Redirect('/')
+  async login(@Req() req: Request, @Res() res: Response) {
+    const jwt = await this.authService.generateJwt(req.user as User);
+    res.cookie('jwt', jwt);
   }
 }

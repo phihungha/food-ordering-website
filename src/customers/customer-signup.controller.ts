@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Render } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Redirect,
+  Render,
+  Res,
+} from '@nestjs/common';
 import { CreateCustomerDto } from './create-customer.dto';
 import { CustomersService } from './customers.service';
 
@@ -13,7 +21,8 @@ export class CustomerSignupController {
   }
 
   @Post()
+  @Redirect('login?signupSucceed=true')
   async signUp(@Body() createCustomerDto: CreateCustomerDto) {
-    return this.customersService.createCustomer(createCustomerDto);
+    this.customersService.createCustomer(createCustomerDto);
   }
 }
