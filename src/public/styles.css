@@ -42,6 +42,18 @@ ul.navbar-link-list {
   margin: 0 13;
 }
 
+.navbar-link-list li a {
+  text-decoration: none;
+}
+
+.navbar-link-list li a:link {
+  color: black;
+}
+
+.navbar-link-list li a:visited {
+  color: black;
+}
+
 .search-box {
   flex: 1.5;
   height: 33;
