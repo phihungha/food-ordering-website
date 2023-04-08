@@ -1,5 +1,11 @@
 -- CreateEnum
-CREATE TYPE "OrderStatus" AS ENUM ('PENDING', 'COMPLETED', 'CANCELED');
+CREATE TYPE "UserType" AS ENUM ('Customer', 'Employee');
+
+-- CreateEnum
+CREATE TYPE "EmployeeType" AS ENUM ('OrderManager', 'InventoryManager', 'SalesManager');
+
+-- CreateEnum
+CREATE TYPE "OrderStatus" AS ENUM ('Pending', 'Completed', 'Canceled');
 
 -- CreateTable
 CREATE TABLE "User" (
@@ -7,8 +13,8 @@ CREATE TABLE "User" (
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "phoneNumber" TEXT NOT NULL,
+    "type" "UserType" NOT NULL,
     "hashedPassword" TEXT NOT NULL,
-    "salt" TEXT NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -16,6 +22,7 @@ CREATE TABLE "User" (
 -- CreateTable
 CREATE TABLE "Employee" (
     "id" INTEGER NOT NULL,
+    "type" "EmployeeType" NOT NULL,
 
     CONSTRAINT "Employee_pkey" PRIMARY KEY ("id")
 );
@@ -62,7 +69,8 @@ CREATE TABLE "Order" (
     "id" SERIAL NOT NULL,
     "customerId" INTEGER NOT NULL,
     "creationTime" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "status" "OrderStatus" NOT NULL DEFAULT 'PENDING',
+    "finishedTime" TIMESTAMP(3),
+    "status" "OrderStatus" NOT NULL,
     "totalAmount" MONEY NOT NULL,
 
     CONSTRAINT "Order_pkey" PRIMARY KEY ("id")

@@ -7,6 +7,21 @@ export class ProductsService {
   constructor(private prisma: PrismaService) {}
 
   async getProducts(): Promise<Product[]> {
-    return this.prisma.product.findMany();
+    return await this.prisma.product.findMany({
+      include: {
+        category: true,
+      },
+    });
+  }
+
+  async getProductById(id: number): Promise<Product | null> {
+    return await this.prisma.product.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        category: true,
+      },
+    });
   }
 }

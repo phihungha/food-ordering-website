@@ -11,19 +11,33 @@ datasource db {
 }
 
 model User {
-  id             Int        @id @default(autoincrement())
-  name           String
-  email          String     @unique
-  phoneNumber    String     @unique
-  customers      Customer[]
-  employees      Employee[]
+  id          Int    @id @default(autoincrement())
+  name        String
+  email       String @unique
+  phoneNumber String @unique
+
+  type     UserType
+  customer Customer?
+  employee Employee?
+
   hashedPassword String
-  salt           String
+}
+
+enum UserType {
+  Customer
+  Employee
 }
 
 model Employee {
-  id   Int  @id
-  user User @relation(fields: [id], references: [id])
+  id   Int          @id
+  user User         @relation(fields: [id], references: [id])
+  type EmployeeType
+}
+
+enum EmployeeType {
+  OrderManager
+  InventoryManager
+  SalesManager
 }
 
 model Customer {
@@ -69,7 +83,7 @@ model Order {
   creationTime DateTime    @default(now())
   finishedTime DateTime?
   items        OrderItem[]
-  status       OrderStatus @default(PENDING)
+  status       OrderStatus
   totalAmount  Decimal     @db.Money
 }
 
@@ -86,7 +100,7 @@ model OrderItem {
 }
 
 enum OrderStatus {
-  PENDING
-  COMPLETED
-  CANCELED
+  Pending
+  Completed
+  Canceled
 }

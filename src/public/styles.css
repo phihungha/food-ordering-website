@@ -11,6 +11,7 @@ body {
 
 .main-container {
   flex: 1;
+  display: flex;
 }
 
 .navbar {
@@ -42,7 +43,19 @@ ul.navbar-link-list {
   margin: 0 13;
 }
 
-.search-box {
+.navbar-link-list li a {
+  text-decoration: none;
+}
+
+.navbar-link-list li a:link {
+  color: black;
+}
+
+.navbar-link-list li a:visited {
+  color: black;
+}
+
+input.search-box {
   flex: 1.5;
   height: 33;
   margin: 0 15;
@@ -59,6 +72,47 @@ ul.navbar-link-list {
 .title {
   font-size: 32px;
   text-align: center;
+  text-transform: uppercase;
+}
+
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+.vertical-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15;
+}
+
+.long-container {
+  width: 450;
+}
+
+input.form-input {
+  border-width: 0;
+  border-radius: 5px;
+  background-color: #f1f1f1;
+  padding: 12;
+  font-size: 16;
+  margin: 10 0;
+}
+
+.form-input:focus {
+  border-width: 0;
+}
+
+input.form-button {
+  border-width: 0;
+  border-radius: 5px;
+  background-color: #13678a;
+  color: white;
+  padding: 12;
+  font-size: 16;
+  margin: 10 0;
 }
 
 footer {
