@@ -7,7 +7,7 @@ export class CreateCustomerDto {
   @IsEmail()
   email: string;
 
-  @IsPhoneNumber()
+  @IsPhoneNumber('VN')
   phoneNumber: string;
 
   @IsNotEmpty()

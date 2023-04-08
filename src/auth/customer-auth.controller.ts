@@ -12,7 +12,7 @@ export class CustomerAuthController {
   @Get()
   @Render('login')
   async getLogin() {
-    return { title: 'ABC Sign in' };
+    return { title: 'Đăng nhập ABC' };
   }
 
   @UseGuards(LocalAuthGuard)

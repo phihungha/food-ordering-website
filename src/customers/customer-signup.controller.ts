@@ -6,10 +6,10 @@ import { CustomersService } from './customers.service';
 export class CustomerSignupController {
   constructor(private customersService: CustomersService) {}
 
-  @Get('signup')
+  @Get()
   @Render('signup')
   signUpPage() {
-    return { title: 'Sign up' };
+    return { title: 'Đăng ký tài khoản ABC' };
   }
 
   @Post()

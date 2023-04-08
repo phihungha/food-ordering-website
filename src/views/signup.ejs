@@ -4,8 +4,53 @@
   <body>
     <%- include('./common/navbar.ejs') %>
 
-    <div class="main-container">
-      <p class="title">Sign up</p>
+    <div class="main-container center-container vertical-container">
+      <h1 class="title">Đăng ký</h1>
+      <form
+        action="/signup"
+        method="post"
+        class="vertical-container long-container"
+      >
+        <input
+          class="form-input"
+          placeholder="Name..."
+          required
+          type="text"
+          name="name"
+        />
+        <input
+          class="form-input"
+          placeholder="Email..."
+          required
+          type="email"
+          name="email"
+        />
+        <input
+          class="form-input"
+          placeholder="Số điện thoại..."
+          required
+          type="tel"
+          pattern="0\d{9}"
+          name="phoneNumber"
+        />
+        <input
+          class="form-input"
+          placeholder="Mật khẩu..."
+          required
+          minlength="8"
+          type="password"
+          name="password"
+        />
+        <input
+          class="form-input"
+          placeholder="Nhập lại mật khẩu..."
+          required
+          minlength="8"
+          type="password"
+        />
+        <input class="form-button" type="submit" value="Đăng ký" />
+      </form>
+      <p>Đã có tài khoản? Hãy <a href="login">đăng nhập</a></p>
     </div>
 
     <%- include('./common/footer.ejs') %>
