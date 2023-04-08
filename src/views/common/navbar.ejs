@@ -1,5 +1,5 @@
 <div class="navbar">
-  <div class="logo-container" >
+  <div class="logo-container">
     <img src="images/logo.svg" />
   </div>
   <input class="search-box" type="text" placeholder="Find products..." />
@@ -7,6 +7,12 @@
     <li><a>Products</a></li>
     <li><a>Cart</a></li>
     <li><a>My Orders</a></li>
-    <li><a>Login</a></li>
+
+    <% if (isSignedIn) { %>
+      <li><a>Logout</a></li>
+    <% } else { %>
+      <li><a>Login</a></li>
+      <li><a>Signup</a></li>
+    <% } %>
   </ul>
 </div>

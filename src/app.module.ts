@@ -9,6 +9,8 @@ import { UsersModule } from './users/users.module';
 import { PrismaModule } from 'nestjs-prisma';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { LoginStatusInterceptor } from './login-status.interceptor';
 
 @Module({
   imports: [
@@ -27,5 +29,11 @@ import { ConfigModule } from '@nestjs/config';
     AuthModule,
   ],
   controllers: [AppController],
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: LoginStatusInterceptor,
+    },
+  ],
 })
 export class AppModule {}
