@@ -3,10 +3,10 @@ import { CreateCustomerDto } from './create-customer.dto';
 import { CustomersService } from './customers.service';
 
 @Controller('signup')
-export class SignupController {
+export class CustomerSignupController {
   constructor(private customersService: CustomersService) {}
 
-  @Get()
+  @Get('signup')
   @Render('signup')
   signUpPage() {
     return { title: 'Sign up' };

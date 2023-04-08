@@ -5,7 +5,16 @@
     <%- include('./common/navbar.ejs') %>
 
     <div class="main-container">
-      <p class="title">Sign in</p>
+      <div class="center-container">
+        <h1 class="title">Sign in</h1>
+        <form action="/login">
+          <label for="email">Email:</label>
+          <input type="text" name="email" />
+          <label for="password">Password:</label>
+          <input type="password" name="password" />
+          <input type="submit" value="submit" />
+        </form>
+      </div>
     </div>
 
     <%- include('./common/footer.ejs') %>
