@@ -1,12 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  Redirect,
-  Render,
-  Res,
-} from '@nestjs/common';
+import { Body, Controller, Get, Post, Redirect, Render } from '@nestjs/common';
 import { CreateCustomerDto } from './create-customer.dto';
 import { CustomersService } from './customers.service';
 
