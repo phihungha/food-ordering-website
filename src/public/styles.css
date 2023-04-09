@@ -1,5 +1,7 @@
 * {
   font-family: Poppins, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -7,6 +9,15 @@ body {
   display: flex;
   flex-direction: column;
   margin: 0;
+}
+
+a:link {
+  color: black;
+  text-decoration: none;
+}
+
+a:visited {
+  text-decoration: none;
 }
 
 .main-container {
@@ -67,12 +78,7 @@ input.search-box {
 
 .main-container {
   flex: 1;
-}
-
-.title {
-  font-size: 32px;
-  text-align: center;
-  text-transform: uppercase;
+  padding: 30 150;
 }
 
 .center-container {
@@ -90,6 +96,18 @@ input.search-box {
 
 .long-container {
   width: 450;
+}
+
+.title {
+  font-size: 32px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.section-title {
+  font-size: 32px;
+  font-weight: bold;
+  margin: 25 0;
 }
 
 input.form-input {
@@ -113,6 +131,48 @@ input.form-button {
   padding: 12;
   font-size: 16;
   margin: 10 0;
+}
+
+.grid-list {
+  display: flex;
+  gap: 50px;
+  flex-wrap: wrap;
+}
+
+.grid-item {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.34);
+  -webkit-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.34);
+  -moz-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.34);
+}
+
+.grid-item-image {
+  width: 250;
+  height: 150;
+  object-fit: cover;
+  align-self: center;
+}
+
+.grid-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 15;
+}
+
+.grid-item-title {
+  font-size: 20;
+}
+
+.grid-item-subtitle {
+  font-size: 18;
+  color: #7b7b7b;
+}
+
+.right-text {
+  text-align: right;
 }
 
 footer {

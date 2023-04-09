@@ -4,13 +4,27 @@
   <body>
     <%- include('./common/navbar.ejs') %>
 
-    <div class="main-container">
-      <p class="title">Sản phẩm</p>
-      <% products.forEach(product => { %>
-        <p>Name: <%= product.name %></p>
-        <p>Price: <%= product.price %></p>
-        <p>Type: <%= product.category.name %></p>
-      <% }) %>
+    <div class="main-container vertical-container">
+      <p class="section-title">Tất cả sản phẩm</p>
+      <div class="grid-list">
+        <% products.forEach(product => { %>
+          <div class="grid-item">
+            <img
+              class="grid-item-image"
+              src="https://cityfarmer.vn/wp-content/uploads/2019/04/raumuong-1024x683.jpg"
+            />
+            <div class="grid-item-info">
+              <a href="/products/<%= product.id %>"
+                ><p class="grid-item-title"><%= product.name %></p></a
+              >
+              <p class="grid-item-subtitle">
+                <%= product.category.name %>
+              </p>
+              <p class="grid-item-subtitle right-text"><%= product.price %> ₫</p>
+            </div>
+          </div>
+        <% }) %>
+      </div>
     </div>
 
     <%- include('./common/footer.ejs') %>
