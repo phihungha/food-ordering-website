@@ -60,4 +60,12 @@ export class MyCartService {
       },
     });
   }
+
+  async clearCart(customerId: number) {
+    return await this.prisma.cartItem.deleteMany({
+      where: {
+        customerId,
+      },
+    });
+  }
 }

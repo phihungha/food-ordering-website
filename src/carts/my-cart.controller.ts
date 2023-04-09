@@ -44,11 +44,18 @@ export class MyCartController {
 
   @Delete(':id')
   @Redirect('my-cart')
-  async deleteFromCart(
+  async removeFromCart(
     @Req() req: Request,
     @Param('id', ParseIntPipe) itemId: number,
   ) {
     const currentUser = req.user! as User;
     await this.myCartService.removeFromCart(currentUser.id, itemId);
+  }
+
+  @Delete()
+  @Redirect('my-cart')
+  async clearCart(@Req() req: Request) {
+    const currentUser = req.user! as User;
+    await this.myCartService.clearCart(currentUser.id);
   }
 }

@@ -60,6 +60,7 @@ export class OrdersService {
   ): Promise<Order> {
     const cart = await this.myCartService.getCart(customerId);
     const orderItems = this.generateOrderItems(cart.cartItems);
+    await this.myCartService.clearCart(customerId);
     return await this.prisma.order.create({
       data: {
         customerId,
