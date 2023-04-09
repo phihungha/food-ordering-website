@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Render, Req } from '@nestjs/common';
+import { Controller, Get, Param, Query, Render, Req } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { User } from '@prisma/client';
 import { Request } from 'express';
@@ -9,8 +9,8 @@ export class ProductsController {
 
   @Get()
   @Render('products')
-  async getProducts() {
-    const products = await this.productsProvider.getProducts();
+  async getProducts(@Query('search') searchTerm: string | undefined) {
+    const products = await this.productsProvider.getProducts(searchTerm);
     return { products, title: 'ABC Products' };
   }
 

@@ -6,8 +6,11 @@ import { PrismaService } from 'nestjs-prisma';
 export class ProductsService {
   constructor(private prisma: PrismaService) {}
 
-  async getProducts(): Promise<Product[]> {
+  async getProducts(name: string | undefined): Promise<Product[]> {
     return await this.prisma.product.findMany({
+      where: {
+        name,
+      },
       include: {
         category: true,
       },
