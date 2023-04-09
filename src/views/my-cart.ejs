@@ -4,10 +4,48 @@
   <body>
     <%- include('./common/navbar.ejs') %>
 
-    <div class="main-container">
-      <p class="title">Giỏ hàng</p>
+    <div class="main-container vertical-container">
+      <form class="vertical-container" action="/my-orders" method="post">
+        <h1>Địa chỉ giao hàng</h1>
+        <input
+          type="text"
+          name="delivery-address"
+          placeholder="Nhập địa chỉ..."
+        />
+        <h1>Giỏ hàng</h1>
+        <div class="vertical-list">
+          <% cart.cartItems.forEach(cartItem => { %>
+            <div class="list-item item-shadow">
+              <img
+                class="list-item-image"
+                src="https://cityfarmer.vn/wp-content/uploads/2019/04/raumuong-1024x683.jpg"
+              />
+              <p class="item-title list-item-middle-area">
+                <a href="/products/<%= cartItem.product.id %>"
+                  ><%= cartItem.product.name %></a
+                >
+              </p>
+              <div class="list-item-right-area">
+                <p class="item-title">SL: <%= cartItem.quantity %></p>
+                <p class="item-title"><%= cartItem.product.price %> ₫</p>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+        <div class="total-amount-container">
+          <p class="total-amount-title">Tổng cộng</p>
+          <p class="total-amount-value"><%= cart.totalAmount %> ₫</p>
+        </div>
+        <input
+          class="submit-btn place-order-btn"
+          type="submit"
+          name="submit"
+          value="Đặt hàng"
+        />
+      </form>
     </div>
 
     <%- include('./common/footer.ejs') %>
+    <script src="scripts/my-cart.js" />
   </body>
 </html>

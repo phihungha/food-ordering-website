@@ -5,22 +5,20 @@
     <%- include('./common/navbar.ejs') %>
 
     <div class="main-container vertical-container">
-      <p class="section-title">Tất cả sản phẩm</p>
+      <h1>Tất cả sản phẩm</h1>
       <div class="grid-list">
         <% products.forEach(product => { %>
-          <div class="grid-item">
+          <div class="grid-item item-shadow">
             <img
               class="grid-item-image"
               src="https://cityfarmer.vn/wp-content/uploads/2019/04/raumuong-1024x683.jpg"
             />
             <div class="grid-item-info">
-              <a href="/products/<%= product.id %>"
-                ><p class="grid-item-title"><%= product.name %></p></a
-              >
-              <p class="grid-item-subtitle">
-                <%= product.category.name %>
+              <p class="item-title">
+                <a href="/products/<%= product.id %>"><%= product.name %></a>
               </p>
-              <p class="grid-item-subtitle right-text"><%= product.price %> ₫</p>
+              <p class="item-subtitle"><%= product.category.name %></p>
+              <p class="item-subtitle right-text"><%= product.price %> ₫</p>
             </div>
           </div>
         <% }) %>
