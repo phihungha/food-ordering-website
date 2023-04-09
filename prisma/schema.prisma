@@ -77,14 +77,15 @@ model CartItem {
 }
 
 model Order {
-  id           Int         @id @default(autoincrement())
-  customer     Customer    @relation(fields: [customerId], references: [id])
-  customerId   Int
-  creationTime DateTime    @default(now())
-  finishedTime DateTime?
-  items        OrderItem[]
-  status       OrderStatus
-  totalAmount  Decimal     @db.Money
+  id              Int         @id @default(autoincrement())
+  customer        Customer    @relation(fields: [customerId], references: [id])
+  customerId      Int
+  creationTime    DateTime    @default(now())
+  finishedTime    DateTime?
+  deliveryAddress String
+  items           OrderItem[]
+  status          OrderStatus
+  totalAmount     Decimal     @db.Money
 }
 
 model OrderItem {

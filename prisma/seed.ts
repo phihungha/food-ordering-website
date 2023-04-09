@@ -131,6 +131,7 @@ async function seedDb() {
   await prisma.order.create({
     data: {
       customer: { connect: { id: customer1.id } },
+      deliveryAddress: '178 Võ Nguyên Giáp',
       items: {
         create: [
           {
@@ -161,6 +162,7 @@ async function seedDb() {
   await prisma.order.create({
     data: {
       customer: { connect: { id: customer1.id } },
+      deliveryAddress: '178 Võ Văn Cừ',
       items: {
         create: [
           {
@@ -180,6 +182,7 @@ async function seedDb() {
   await prisma.order.create({
     data: {
       customer: { connect: { id: customer2.id } },
+      deliveryAddress: '178 Võ Văn Cừ',
       items: {
         create: [
           {
