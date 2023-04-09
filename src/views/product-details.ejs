@@ -4,13 +4,12 @@
   <body>
     <%- include('./common/navbar.ejs') %>
 
-    <div class="main-container">
-      <p class="title">Product details</p>
-      <p>Name: <%= product.name %></p>
-      <p>Price: <%= product.price %></p>
-      <p>Type: <%= product.category.name %></p>
-      <p>Addition Date: <%= product.additionDate %></p>
-      <p>Number of orders bought: <%= product.buyCount %></p>
+    <div class="main-container vertical-container">
+      <p class="title">Product details</p><br>
+      <p>Tên: <%= product.name %></p><br>
+      <p>Giá: <%= product.price %></p><br>
+      <p>Loại: <%= product.category.name %></p><br>
+      <p>Số lượt mua: <%= product.buyCount %></p>
     </div>
 
     <%- include('./common/footer.ejs') %>
