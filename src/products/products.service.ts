@@ -14,14 +14,23 @@ export class ProductsService {
     });
   }
 
-  async getProductById(id: number): Promise<Product | null> {
-    return await this.prisma.product.findUnique({
+  async getProductById(id: number, customerId: number) {
+    const product = await this.prisma.product.findUnique({
       where: {
         id,
       },
       include: {
         category: true,
+        carts: {
+          where: {
+            customerId,
+          },
+        },
       },
     });
+    return {
+      product,
+      cartQuantity: product?.carts[0].quantity,
+    };
   }
 }

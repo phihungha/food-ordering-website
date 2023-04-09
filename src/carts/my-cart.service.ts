@@ -32,10 +32,19 @@ export class MyCartService {
     customerId: number,
     quantity: number,
   ): Promise<CartItem> {
-    return await this.prisma.cartItem.create({
-      data: {
-        productId,
+    return await this.prisma.cartItem.upsert({
+      where: {
+        customerId_productId: {
+          customerId,
+          productId,
+        },
+      },
+      create: {
         customerId,
+        productId,
+        quantity,
+      },
+      update: {
         quantity,
       },
     });

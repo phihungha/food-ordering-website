@@ -1,5 +1,7 @@
-import { Controller, Get, Param, ParseIntPipe, Render } from '@nestjs/common';
+import { Controller, Get, Param, Render, Req } from '@nestjs/common';
 import { ProductsService } from './products.service';
+import { User } from '@prisma/client';
+import { Request } from 'express';
 
 @Controller('products')
 export class ProductsController {
@@ -14,8 +16,16 @@ export class ProductsController {
 
   @Get(':id')
   @Render('product-details')
-  async getProductDetails(@Param('id') productId: number) {
-    const product = await this.productsProvider.getProductById(productId);
-    return { product, title: 'ABC Products' };
+  async getProductDetails(@Param('id') productId: number, @Req() req: Request) {
+    const currentUser = req.user! as User;
+    const result = await this.productsProvider.getProductById(
+      productId,
+      currentUser.id,
+    );
+    return {
+      product: result.product,
+      cartQuantity: result.cartQuantity,
+      title: 'ABC Products',
+    };
   }
 }
