@@ -17,7 +17,7 @@ export class ProductsService {
     });
   }
 
-  async getProductById(id: number, customerId: number) {
+  async getProductById(id: number, customerId: number | undefined) {
     const product = await this.prisma.product.findUnique({
       where: {
         id,
@@ -36,9 +36,16 @@ export class ProductsService {
       throw new NotFoundException('Product not found');
     }
 
+    let cartQuantity;
+    if (customerId && product.carts[0]?.quantity) {
+      cartQuantity = product.carts[0].quantity;
+    } else {
+      cartQuantity = 1;
+    }
+
     return {
       product,
-      cartQuantity: product.carts[0]?.quantity ?? 1,
+      cartQuantity,
     };
   }
 }

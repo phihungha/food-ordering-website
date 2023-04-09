@@ -17,10 +17,10 @@ export class ProductsController {
   @Get(':id')
   @Render('product-details')
   async getProductDetails(@Param('id') productId: number, @Req() req: Request) {
-    const currentUser = req.user! as User;
+    const currentUser = req.user as User | undefined;
     const result = await this.productsProvider.getProductById(
       productId,
-      currentUser.id,
+      currentUser?.id,
     );
     return {
       product: result.product,

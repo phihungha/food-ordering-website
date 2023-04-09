@@ -10,7 +10,6 @@ import {
   Render,
   Req,
   UseGuards,
-  ValidationPipe,
 } from '@nestjs/common';
 import { MyCartService } from './my-cart.service';
 import { Request } from 'express';
@@ -19,10 +18,10 @@ import { AddToCartDto } from './add-to-cart.dto';
 import { User } from '@prisma/client';
 
 @Controller('my-cart')
+@UseGuards(JwtAuthGuard)
 export class MyCartController {
   constructor(private myCartService: MyCartService) {}
 
-  @UseGuards(JwtAuthGuard)
   @Get()
   @Render('my-cart')
   async getCart(@Req() req: Request) {

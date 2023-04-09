@@ -10,14 +10,16 @@ import {
   Render,
   Req,
   Res,
-  UseInterceptors,
+  UseGuards,
 } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { Request, Response } from 'express';
 import { User } from '@prisma/client';
 import { PlaceOrderDto } from './place-order.dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('my-orders')
+@UseGuards(JwtAuthGuard)
 export class MyOrdersController {
   constructor(private ordersService: OrdersService) {}
 
