@@ -5,11 +5,35 @@
     <%- include('./common/navbar.ejs') %>
 
     <div class="main-container vertical-container">
-      <p class="title">Product details</p><br>
-      <p>ID: <%= order.id %></p><br>
-      <p>Tạo vào: <%= order.creationTime %></p><br>
-      <p>Trạng thái: <%= order.status %></p><br>
+      <p class="title">Product details</p>
+      <br />
+      <p>ID: <%= order.id %></p>
+      <br />
+      <p>Tạo vào: <%= order.creationTime %></p>
+      <br />
+      <p>Trạng thái: <%= order.status %></p>
+      <br />
       <p>Tổng tiền: <%= order.totalAmount %></p>
+
+      <div class="vertical-list">
+        <% order.items.forEach(item => { %>
+          <div class="list-item item-shadow">
+            <img
+              class="list-item-image"
+              src="https://cityfarmer.vn/wp-content/uploads/2019/04/raumuong-1024x683.jpg"
+            />
+            <p class="item-title list-item-middle-area">
+              <a href="/products/<%= item.productId %>">Order #<%= order.id %></a>
+            </p>
+            <div class="list-item-right-area">
+              <p class="item-title">
+                SL: <%= item.quantity %>
+              </p>
+              <p class="item-title"><%= item.unitPrice %> ₫</p>
+            </div>
+          </div>
+        <% }) %>
+      </div>
     </div>
 
     <%- include('./common/footer.ejs') %>

@@ -25,6 +25,13 @@ export class OrdersService {
         id: orderId,
         customerId: userId,
       },
+      include: {
+        items: {
+          include: {
+            product: true,
+          },
+        },
+      },
     });
 
     if (!result.length) {
