@@ -5,10 +5,10 @@
   <input class="search-box" type="text" placeholder="Find products..." />
   <ul class="navbar-link-list">
     <li><a href="/products">Sản phẩm</a></li>
-    <li><a href="/my-cart">Giỏ hàng</a></li>
-    <li><a href="/my-orders">Đơn hàng</a></li>
 
     <% if (isSignedIn) { %>
+      <li><a href="/my-cart">Giỏ hàng</a></li>
+      <li><a href="/my-orders">Đơn hàng</a></li>
       <li><a href="/logout">Đăng xuất</a></li>
     <% } else { %>
       <li><a href="/login">Đăng nhập</a></li>
