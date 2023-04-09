@@ -10,6 +10,7 @@ import {
   Render,
   Req,
   UseGuards,
+  ValidationPipe,
 } from '@nestjs/common';
 import { MyCartService } from './my-cart.service';
 import { Request } from 'express';

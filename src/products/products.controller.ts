@@ -14,7 +14,7 @@ export class ProductsController {
 
   @Get(':id')
   @Render('product-details')
-  async getProductDetails(@Param('id', ParseIntPipe) productId: number) {
+  async getProductDetails(@Param('id') productId: number) {
     const product = await this.productsProvider.getProductById(productId);
     return { product, title: 'ABC Products' };
   }

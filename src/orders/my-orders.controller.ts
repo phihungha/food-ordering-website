@@ -29,10 +29,7 @@ export class MyOrdersController {
 
   @Get(':id')
   @Render('order-details')
-  async getOrderDetails(
-    @Param('id', ParseIntPipe) orderId: number,
-    @Req() req: Request,
-  ) {
+  async getOrderDetails(@Param('id') orderId: number, @Req() req: Request) {
     const currentUser = req.user! as User;
     const order = await this.ordersService.getOrderDetails(
       orderId,

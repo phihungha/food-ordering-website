@@ -5,11 +5,25 @@
     <%- include('./common/navbar.ejs') %>
 
     <div class="main-container vertical-container">
-      <p class="title">Product details</p><br>
-      <p>Tên: <%= product.name %></p><br>
-      <p>Giá: <%= product.price %></p><br>
-      <p>Loại: <%= product.category.name %></p><br>
+      <p class="title">Product details</p>
+      <br />
+      <p>Tên: <%= product.name %></p>
+      <br />
+      <p>Giá: <%= product.price %></p>
+      <br />
+      <p>Loại: <%= product.category.name %></p>
+      <br />
       <p>Số lượt mua: <%= product.buyCount %></p>
+      <form action="/my-cart" method="post">
+        <input
+          type="number"
+          name="productId"
+          hidden
+          value="<%= product.id %>"
+        />
+        <input type="number" name="quantity" min="1" value="1" />
+        <input type="submit" value="Add to Cart" />
+      </form>
     </div>
 
     <%- include('./common/footer.ejs') %>
