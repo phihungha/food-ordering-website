@@ -6,5 +6,9 @@ document
       return;
     }
     const elem = event.target as HTMLInputElement;
-    window.location.assign(`/products?search=${elem.value}`);
+    if (elem.value) {
+      window.location.assign(`/products?search=${elem.value}`);
+    } else {
+      window.location.assign(`/products`);
+    }
   });
