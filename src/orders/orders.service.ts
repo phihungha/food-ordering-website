@@ -18,6 +18,9 @@ export class OrdersService {
       where: {
         customerId,
       },
+      orderBy: {
+        id: 'desc',
+      },
     });
   }
 
