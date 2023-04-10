@@ -11,7 +11,7 @@ export class ProductsController {
   @Render('products')
   async getProducts(@Query('search') searchTerm: string | undefined) {
     const products = await this.productsProvider.getProducts(searchTerm);
-    return { products, title: 'ABC Products' };
+    return { products, title: 'ABC Products', searchTerm };
   }
 
   @Get(':id')

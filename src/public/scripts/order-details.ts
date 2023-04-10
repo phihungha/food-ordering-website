@@ -1,9 +1,9 @@
-document.querySelectorAll('#order-cancel-btn').forEach((e) => {
-  e.addEventListener('click', async () => {
-    const elem = e as HTMLButtonElement;
+document
+  .querySelector('#order-cancel-btn')!
+  .addEventListener('click', async (event) => {
+    const elem = event.target as HTMLButtonElement;
     await fetch(`/my-orders/${elem.dataset.orderid}`, {
       method: 'DELETE',
     });
     window.location.reload();
   });
-});

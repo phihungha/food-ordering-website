@@ -5,9 +5,20 @@
     <%- include('./common/navbar.ejs') %>
 
     <div class="main-container vertical-container">
-      <h1>Tất cả sản phẩm</h1>
-      <div class="grid-list">
-        <% products.forEach(product => { %>
+      <% if (searchTerm) { %>
+        <h1>
+          Các sản phẩm với tên "<%= searchTerm %>" (<%= products.length %> kết
+          quả)
+        </h1>
+      <% } else { %>
+        <h1>Tất cả sản phẩm</h1>
+      <% } %> <% if (products.length === 0) { %>
+        <div class="grey-message-box">
+          <p>Không tìm thấy sản phẩm nào với tên "<%= searchTerm %>"</p>
+        </div>
+      <% } else { %>
+        <div class="grid-list">
+          <% products.forEach(product => { %>
           <div class="grid-item item-shadow">
             <img
               class="grid-item-image"
@@ -21,8 +32,9 @@
               <p class="item-subtitle right-text"><%= product.price %> ₫</p>
             </div>
           </div>
-        <% }) %>
-      </div>
+          <% }) %>
+        </div>
+      <% } %>
     </div>
 
     <%- include('./common/footer.ejs') %>
