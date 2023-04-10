@@ -20,6 +20,30 @@ export class ProductsService {
     });
   }
 
+  async getPopularProducts(): Promise<Product[]> {
+    return await this.prisma.product.findMany({
+      include: {
+        category: true,
+      },
+      orderBy: {
+        buyCount: 'desc',
+      },
+      take: 20,
+    });
+  }
+
+  async getRecentProducts(): Promise<Product[]> {
+    return await this.prisma.product.findMany({
+      include: {
+        category: true,
+      },
+      orderBy: {
+        additionDate: 'desc',
+      },
+      take: 20,
+    });
+  }
+
   async getProductById(id: number, customerId: number | undefined) {
     const product = await this.prisma.product.findUnique({
       where: {
