@@ -1,6 +1,6 @@
 document
-  .querySelector('#product-search-box')!
-  .addEventListener('keyup', async (e) => {
+  .querySelector('#product-search-box')
+  ?.addEventListener('keyup', async (e) => {
     const event = e as KeyboardEvent;
     if (event.key !== 'Enter') {
       return;

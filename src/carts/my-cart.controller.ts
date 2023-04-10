@@ -25,7 +25,7 @@ export class MyCartController {
   @Get()
   @Render('my-cart')
   async getCart(@Req() req: Request) {
-    const currentUser = req.user! as User;
+    const currentUser = req.user as User;
     const cart = await this.myCartService.getCart(currentUser.id);
     return { title: 'My cart', cart };
   }
@@ -33,7 +33,7 @@ export class MyCartController {
   @Post()
   @Redirect('my-cart')
   async addToCart(@Req() req: Request, @Body() body: AddToCartDto) {
-    const currentUser = req.user! as User;
+    const currentUser = req.user as User;
     return await this.myCartService.addToCart(
       body.productId,
       currentUser.id,
@@ -46,13 +46,13 @@ export class MyCartController {
     @Req() req: Request,
     @Param('id', ParseIntPipe) itemId: number,
   ) {
-    const currentUser = req.user! as User;
+    const currentUser = req.user as User;
     return await this.myCartService.removeFromCart(currentUser.id, itemId);
   }
 
   @Delete()
   async clearCart(@Req() req: Request) {
-    const currentUser = req.user! as User;
+    const currentUser = req.user as User;
     return await this.myCartService.clearCart(currentUser.id);
   }
 }

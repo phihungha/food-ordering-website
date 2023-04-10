@@ -25,7 +25,7 @@ export class MyOrdersController {
   @Get()
   @Render('my-orders')
   async getMyOrders(@Req() req: Request) {
-    const currentUser = req.user! as User;
+    const currentUser = req.user as User;
     const orders = await this.ordersService.getMyOrders(currentUser.id);
     return { title: 'My orders', orders };
   }
@@ -33,7 +33,7 @@ export class MyOrdersController {
   @Get(':id')
   @Render('order-details')
   async getOrderDetails(@Param('id') orderId: number, @Req() req: Request) {
-    const currentUser = req.user! as User;
+    const currentUser = req.user as User;
     const order = await this.ordersService.getOrderDetails(
       orderId,
       currentUser.id,
@@ -51,7 +51,7 @@ export class MyOrdersController {
     @Req() req: Request,
     @Res() res: Response,
   ) {
-    const currentUser = req.user! as User;
+    const currentUser = req.user as User;
     const order = await this.ordersService.placeOrder(
       body.deliveryAddress,
       currentUser.id,
@@ -65,7 +65,7 @@ export class MyOrdersController {
     @Param('id', ParseIntPipe) orderId: number,
     @Req() req: Request,
   ) {
-    const currentUser = req.user! as User;
+    const currentUser = req.user as User;
     return await this.ordersService.cancelOrder(orderId, currentUser.id);
   }
 }
