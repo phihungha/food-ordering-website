@@ -5,6 +5,9 @@
   "compilerOptions": {
     "deleteOutDir": true,
     "watchAssets": true,
-    "assets": ["**/views/**/*", "**/public/**/*"]
+    "assets": [
+      "**/views/**/*",
+      { "include": "**/public/**/*", "exclude": "**/public/**/*.ts" }
+    ]
   }
 }
