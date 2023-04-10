@@ -71,6 +71,13 @@ input[type='submit'] {
 .vertical-container {
   display: flex;
   flex-direction: column;
+  gap: 20px;
+}
+
+.section-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .title {
@@ -78,9 +85,8 @@ input[type='submit'] {
   text-transform: uppercase;
 }
 
-.submit-btn {
-  background-color: #13678a;
-  color: white;
+.right-text {
+  text-align: right;
 }
 
 .item-title {
@@ -98,9 +104,23 @@ input[type='submit'] {
   -moz-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.34);
 }
 
+.submit-btn {
+  background-color: #13678a;
+  color: white;
+}
+
+.delete-btn {
+  background: none;
+}
+
+.icon {
+  width: 28;
+}
+
 .grid-list {
   display: flex;
   gap: 50px;
+  justify-content: center;
   flex-wrap: wrap;
 }
 
@@ -114,18 +134,13 @@ input[type='submit'] {
   width: 250;
   height: 150;
   object-fit: cover;
-  align-self: center;
 }
 
 .grid-item-info {
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 5px;
   padding: 15;
-}
-
-.right-text {
-  text-align: right;
 }
 
 .vertical-list {
@@ -134,27 +149,29 @@ input[type='submit'] {
   gap: 25px;
 }
 
-.list-item {
+.vertical-list-item {
   display: flex;
 }
 
-.list-item-middle-area {
-  flex: 1;
-  display: flex;
-  align-items: center;
-}
-
-.list-item-right-area {
-  flex: 0.2;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.list-item-image {
+.vertical-list-item-image {
   width: 300;
   height: 150;
   object-fit: cover;
+}
+
+.vertical-list-item-area {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 20;
+}
+
+.vertical-list-item-middle-area {
+  flex: 1;
+}
+
+.vertical-list-item-right-area {
+  flex: 0.1;
 }
 
 /* || Site-wide */
@@ -215,7 +232,6 @@ input.search-box {
 
 .auth-field-container {
   width: 450;
-  gap: 15px;
 }
 
 /* Order and cart pages */
@@ -224,8 +240,7 @@ input.search-box {
   display: flex;
   flex-direction: column;
   align-items: end;
-  margin: 30 15;
-  gap: 10px;
+  gap: 5px;
 }
 
 .total-amount-title {
@@ -234,11 +249,11 @@ input.search-box {
 }
 
 .total-amount-value {
-  font-size: 24;
+  font-size: 28;
 }
 
 .place-order-btn {
-  width: 200;
+  width: 250;
   align-self: flex-end;
 }
 
