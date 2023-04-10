@@ -4,26 +4,30 @@
   <body>
     <%- include('./common/navbar.ejs') %>
 
-    <div class="main-container vertical-container">
-      <h1>Đơn hàng</h1>
-      <div class="vertical-list">
-        <% orders.forEach(order => { %>
-          <div class="list-item item-shadow">
-            <img
-              class="list-item-image"
-              src="https://cityfarmer.vn/wp-content/uploads/2019/04/raumuong-1024x683.jpg"
-            />
-            <p class="item-title list-item-middle-area">
-              <a href="/my-orders/<%= order.id %>"
-                >Order #<%= order.id %></a
+    <div class="main-container">
+      <div class="section-container">
+        <h1>Đơn hàng</h1>
+        <div class="vertical-list">
+          <% orders.forEach(order => { %>
+            <div class="vertical-list-item item-shadow">
+              <img
+                class="vertical-list-item-image"
+                src="https://cityfarmer.vn/wp-content/uploads/2019/04/raumuong-1024x683.jpg"
+              />
+              <p
+                class="item-title vertical-list-item-area vertical-list-item-middle-area"
               >
-            </p>
-            <div class="list-item-right-area">
-              <p class="item-title">Đặt vào: <%= order.creationTime.toLocaleString() %></p>
-              <p class="item-title"><%= order.totalAmount %> ₫</p>
+                <a href="/my-orders/<%= order.id %>">Đơn #<%= order.id %></a>
+              </p>
+              <div class="vertical-list-item-area order-vertical-list-item-right-area">
+                <p class="item-title">
+                  Đặt vào: <%= new Intl.DateTimeFormat('en-GB', { dateStyle: 'short', timeStyle: 'medium'}).format(order.creationTime) %>
+                </p>
+                <p class="item-title">Tổng tiền: <%= order.totalAmount %> ₫</p>
+              </div>
             </div>
-          </div>
-        <% }) %>
+          <% }) %>
+        </div>
       </div>
     </div>
 

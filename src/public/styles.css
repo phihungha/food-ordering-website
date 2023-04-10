@@ -9,7 +9,12 @@ body {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  margin: 0;
+}
+
+footer {
+  text-align: center;
+  padding: 10 0;
+  background-color: #bdbdbd;
 }
 
 form {
@@ -171,7 +176,7 @@ input[type='submit'] {
 }
 
 .vertical-list-item-right-area {
-  flex: 0.1;
+  margin-right: 45;
 }
 
 /* || Site-wide */
@@ -257,12 +262,6 @@ input.search-box {
   align-self: flex-end;
 }
 
-.no-margin {
-  margin: 0;
-}
-
-footer {
-  text-align: center;
-  padding: 10 0;
-  background-color: #bdbdbd;
+.order-vertical-list-item-right-area {
+  margin-right: 50;
 }
