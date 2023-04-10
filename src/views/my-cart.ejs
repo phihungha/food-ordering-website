@@ -8,7 +8,13 @@
       <div class="section-container">
         <h1>Giỏ hàng</h1>
         <div class="vertical-list">
-          <% cart.cartItems.forEach(cartItem => { %>
+          <% if (cart.cartItems.length === 0) { %>
+            <div class="grey-message-box">
+              <p>
+                Bạn chưa chọn gì. Hãy mua gì đó <a href="/products">ở đây</a>
+              </p>
+            </div>
+          <% } else { %> <% cart.cartItems.forEach(cartItem => { %>
             <div class="vertical-list-item item-shadow">
               <img
                 class="vertical-list-item-image"
@@ -27,12 +33,15 @@
               </div>
 
               <div class="vertical-list-item-area">
-                <button class="delete-btn cart-item-delete-btn" data-productid="<%= cartItem.product.id %>">
+                <button
+                  class="delete-btn cart-item-delete-btn"
+                  data-productid="<%= cartItem.product.id %>"
+                >
                   <img class="icon" src="images/trash-can.svg" />
                 </button>
               </div>
             </div>
-          <% }) %>
+          <% }) } %>
         </div>
       </div>
 
