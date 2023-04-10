@@ -77,6 +77,7 @@ export class OrdersService {
       where: {
         id: orderId,
         customerId: userId,
+        status: OrderStatus.Pending,
       },
       data: {
         status: OrderStatus.Canceled,

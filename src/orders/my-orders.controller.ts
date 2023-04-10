@@ -6,7 +6,6 @@ import {
   Param,
   ParseIntPipe,
   Post,
-  Redirect,
   Render,
   Req,
   Res,
@@ -14,7 +13,7 @@ import {
 } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { Request, Response } from 'express';
-import { User } from '@prisma/client';
+import { OrderStatus, User } from '@prisma/client';
 import { PlaceOrderDto } from './place-order.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
@@ -39,7 +38,11 @@ export class MyOrdersController {
       orderId,
       currentUser.id,
     );
-    return { title: `Order #${order.id}`, order };
+    return {
+      title: `Order #${order.id}`,
+      order,
+      isCancelable: order.status === OrderStatus.Pending,
+    };
   }
 
   @Post()
@@ -57,7 +60,6 @@ export class MyOrdersController {
   }
 
   @Delete(':id')
-  @Redirect('order-details')
   async cancelOrder(
     @Param('id', ParseIntPipe) orderId: number,
     @Req() req: Request,
