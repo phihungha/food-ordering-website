@@ -48,4 +48,15 @@ export class ProductsService {
       cartQuantity,
     };
   }
+
+  async updateProductsBuyCount(products: number[]) {
+    return this.prisma.product.updateMany({
+      where: {
+        id: { in: products },
+      },
+      data: {
+        buyCount: { increment: 1 },
+      },
+    });
+  }
 }
