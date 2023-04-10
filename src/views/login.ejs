@@ -4,22 +4,15 @@
   <body>
     <%- include('./common/navbar.ejs') %>
 
-    <div class="main-container center-container vertical-container">
+    <div class="main-container center-container">
       <h1 class="title">Đăng nhập</h1>
       <form
         action="/login"
         method="post"
-        class="vertical-container long-container"
+        class="vertical-container auth-field-container"
       >
+        <input placeholder="Email..." required type="email" name="email" />
         <input
-          class="input-margin"
-          placeholder="Email..."
-          required
-          type="email"
-          name="email"
-        />
-        <input
-          class="input-margin"
           placeholder="Mật khẩu..."
           required
           type="password"

@@ -4,29 +4,16 @@
   <body>
     <%- include('./common/navbar.ejs') %>
 
-    <div class="main-container center-container vertical-container">
+    <div class="main-container center-container">
       <h1 class="title">Đăng ký</h1>
       <form
         action="/signup"
         method="post"
-        class="vertical-container long-container"
+        class="vertical-container auth-field-container"
       >
+        <input placeholder="Name..." required type="text" name="name" />
+        <input placeholder="Email..." required type="email" name="email" />
         <input
-          class="input-margin"
-          placeholder="Name..."
-          required
-          type="text"
-          name="name"
-        />
-        <input
-          class="input-margin"
-          placeholder="Email..."
-          required
-          type="email"
-          name="email"
-        />
-        <input
-          class="input-margin"
           placeholder="Số điện thoại..."
           required
           type="tel"
@@ -34,7 +21,6 @@
           name="phoneNumber"
         />
         <input
-          class="input-margin"
           placeholder="Mật khẩu..."
           required
           minlength="8"
@@ -42,7 +28,6 @@
           name="password"
         />
         <input
-          class="input-margin"
           placeholder="Nhập lại mật khẩu..."
           required
           minlength="8"
