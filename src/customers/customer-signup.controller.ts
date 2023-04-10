@@ -15,6 +15,6 @@ export class CustomerSignupController {
   @Post()
   @Redirect('login?signupSucceed=true')
   async signUp(@Body() createCustomerDto: CreateCustomerDto) {
-    this.customersService.createCustomer(createCustomerDto);
+    return this.customersService.createCustomer(createCustomerDto);
   }
 }

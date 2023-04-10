@@ -34,7 +34,7 @@ export class MyCartController {
   @Redirect('my-cart')
   async addToCart(@Req() req: Request, @Body() body: AddToCartDto) {
     const currentUser = req.user! as User;
-    await this.myCartService.addToCart(
+    return await this.myCartService.addToCart(
       body.productId,
       currentUser.id,
       body.quantity,
@@ -47,12 +47,12 @@ export class MyCartController {
     @Param('id', ParseIntPipe) itemId: number,
   ) {
     const currentUser = req.user! as User;
-    await this.myCartService.removeFromCart(currentUser.id, itemId);
+    return await this.myCartService.removeFromCart(currentUser.id, itemId);
   }
 
   @Delete()
   async clearCart(@Req() req: Request) {
     const currentUser = req.user! as User;
-    await this.myCartService.clearCart(currentUser.id);
+    return await this.myCartService.clearCart(currentUser.id);
   }
 }

@@ -57,6 +57,7 @@ export class MyOrdersController {
       currentUser.id,
     );
     res.redirect(`my-orders/${order.id}`);
+    return order;
   }
 
   @Delete(':id')
@@ -65,6 +66,6 @@ export class MyOrdersController {
     @Req() req: Request,
   ) {
     const currentUser = req.user! as User;
-    await this.ordersService.cancelOrder(orderId, currentUser.id);
+    return await this.ordersService.cancelOrder(orderId, currentUser.id);
   }
 }
