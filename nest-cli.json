@@ -7,7 +7,10 @@
     "watchAssets": true,
     "assets": [
       "**/views/**/*",
-      { "include": "**/public/**/*", "exclude": "**/public/**/*.ts" }
+      {
+        "include": "**/public/**/*",
+        "exclude": "**/public/**/*.ts"
+      }
     ]
   }
 }
