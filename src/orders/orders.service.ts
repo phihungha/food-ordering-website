@@ -29,7 +29,13 @@ export class OrdersService {
       case 'canceled':
         orderStatusFilter = OrderStatus.Canceled;
         break;
+      case 'all':
+        orderStatusFilter = undefined;
+        break;
+      default:
+        orderStatusFilter = OrderStatus.Pending;
     }
+
     return await this.prisma.order.findMany({
       where: {
         customerId,
