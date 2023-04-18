@@ -293,7 +293,7 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
-  width: 1000px;
+  width: 800px;
   height: 400px;
   border: solid 6px #fff;
   box-shadow: 0 30px 20px -20px rgba(0,0,0,0.3);
@@ -315,8 +315,7 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
-  width: 360px;
-  height: 360px;
+  display: flex;
 }
 .right-set {
   float: right;
