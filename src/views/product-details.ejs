@@ -4,24 +4,35 @@
   <body>
     <%- include('./common/navbar.ejs') %>
 
-    <div class="main-container">
-      <p class="title">Product details</p>
-      <p>Tên: <%= product.name %></p>
-      <p>Giá: <%= product.price %></p>
-      <p>Loại: <%= product.category.name %></p>
-      <p>Số lượt mua: <%= product.buyCount %></p>
-      <form action="/my-cart" method="post">
-        <input
-          type="number"
-          name="productId"
-          hidden
-          value="<%= product.id %>"
-        />
-        <input type="number" name="quantity" min="1" value="<%= cartQuantity %>" />
-        <input type="submit" value="Add to Cart" />
-      </form>
+    <div class="single-item">
+      <div class="left-set">
+        <img src="https://cityfarmer.vn/wp-content/uploads/2019/04/raumuong-1024x683.jpg" alt="" />
+      </div>
+      <div class="right-set">
+        <div class="name"><%= product.name %></div>
+        <div class="price"><%= product.price %>đ</div>
+        <div class="description">
+          <p>Loại: <%= product.category.name %></p>
+        </div>
+        <div class="description">
+          <p>Số lượt mua: <%= product.buyCount %></p>
+        </div>
+        <form action="/my-cart" method="post">
+          <input
+            type="number"
+            name="productId"
+            hidden
+            value="<%= product.id %>"
+          />
+          <div class="cart-padding">
+            <input type="number" name="quantity" min="1" value="<%= cartQuantity %>" />
+          </div>
+          <div class="cart-padding">
+            <input type="submit" value="Add to Cart" />
+          </div>
+        </form>
+      </div>
     </div>
-
-    <%- include('./common/footer.ejs') %>
   </body>
 </html>
+
