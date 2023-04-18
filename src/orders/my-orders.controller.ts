@@ -6,6 +6,7 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  Query,
   Render,
   Req,
   Res,
@@ -16,6 +17,7 @@ import { Request, Response } from 'express';
 import { OrderStatus, User } from '@prisma/client';
 import { PlaceOrderDto } from './place-order.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { OrderStatusQuery } from './order-status.type';
 
 @Controller('my-orders')
 @UseGuards(JwtAuthGuard)
@@ -24,9 +26,15 @@ export class MyOrdersController {
 
   @Get()
   @Render('my-orders')
-  async getMyOrders(@Req() req: Request) {
+  async getMyOrders(
+    @Query('status') statusFilter: OrderStatusQuery,
+    @Req() req: Request,
+  ) {
     const currentUser = req.user as User;
-    const orders = await this.ordersService.getMyOrders(currentUser.id);
+    const orders = await this.ordersService.getMyOrders(
+      currentUser.id,
+      statusFilter,
+    );
     return { title: 'My orders', orders };
   }
 
