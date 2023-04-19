@@ -37,7 +37,9 @@
             <div class="grid-order-info">
               <p class="_section-name">Hoàn tất</p>
               <p class="item-content">
-                <%= defaultDateTimeFormatter.format(order.finishedTime) %>
+                <%= order.finishedTime ?
+                    defaultDateTimeFormatter.format(order.finishedTime) :
+                    'Chưa hoàn tất' %>
               </p>
             </div>
           </div>
