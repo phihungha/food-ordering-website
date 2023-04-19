@@ -3,14 +3,40 @@
 
   <body>
     <%- include('./common/navbar.ejs') %>
-
     <div class="main-container">
-      <p class="title">Order details</p>
-      <p>ID: <%= order.id %></p>
-      <p>Tạo vào: <%= order.creationTime %></p>
-      <p>Hoàn tất: <%= order.finishedTime %></p>
-      <p>Trạng thái: <%= order.status %></p>
-      <p>Tổng tiền: <%= order.totalAmount %></p>
+      <p class="_order-id">Thông tin Order <%= order.id %></p>
+      
+        <div class="grid-list item-shadow"> 
+          <div class="vertical-list">
+            <div class="grid-order-section">
+              <div class="grid-order-info">
+                  <p class="_section-name">Địa chỉ</p>
+                <p class="item-content"><%= order.deliveryAddress %></p>
+              </div>
+            </div>
+              <div class="grid-order-section">
+                <div class="grid-order-info">
+                    <p class="_section-name">Tạo vào</p>
+                  <p class="item-content"><%= order.creationTime %></p>
+                </div>
+            </div>
+          </div>
+        <div class="vertical-list">
+          <div class="grid-order-section">
+            <div class="grid-order-info">
+                <p class="_section-name">Trạng thái</p>
+              <p class="item-content"><%= order.status %></p>
+            </div>
+          </div>
+            <div class="grid-order-section">
+              <div class="grid-order-info">
+                  <p class="_section-name">Hoàn tất</p>
+                <p class="item-content"><%= order.finishedTime %></p>
+              </div>
+          </div>
+        </div>
+      </div>
+      
 
       <div class="vertical-list">
         <% order.items.forEach(item => { %>
@@ -41,8 +67,12 @@
       <% } %>
     </div>
 
+    <p class="amount">Tổng tiền: <%= order.totalAmount %></p>
+
     <%- include('./common/footer.ejs') %>
 
     <script src="/scripts/order-details.js"></script>
   </body>
 </html>
+
+
