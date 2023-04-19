@@ -1,6 +1,6 @@
 services:
   nest-server:
-    container_name: nest-server
+    container_name: fos-nest-server
     build:
       context: .
       dockerfile: Dockerfile
@@ -10,7 +10,7 @@ services:
       - postgres-db
 
   postgres-db:
-    container_name: postgres-db
+    container_name: fos-postgres-db
     image: postgres:15
     ports:
       - 5432:5432
