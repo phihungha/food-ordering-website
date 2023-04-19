@@ -270,12 +270,7 @@ input.search-box {
   width: 450;
 }
 
-.text-link {
-  color: var(--primary-color);
-}
-
-.login:link,
-.signup:link {
+.text-link:link {
   color: #13678a;
 }
 
