@@ -6,16 +6,16 @@
 
 <div class="main-container vertical-container">
   <div class="centered item-shadow">
-      <img width="50%" height="100%" src="https://cityfarmer.vn/wp-content/uploads/2019/04/raumuong-1024x683.jpg">
+      <img width="350" height="350" src="https://cityfarmer.vn/wp-content/uploads/2019/04/raumuong-1024x683.jpg">
     <div class="vertical-list">
       <div class="name"><%= product.name %></div>
       <div class="price"><%= product.price %>đ</div>
       <div>
         <p class="description-product">Loại: <%= product.category.name %></p>
-      </div>
-      <div>
         <p class="description-product"> Số lượt mua: <%= product.buyCount %></p>
-      </div>
+        <p class="description-product"> Chú thích:</p>
+        <p class="description-product"> Táo là loại cây ưa khí hậu khô,...</p>
+      </div>  
       <form action="/my-cart" method="post">
         <input
           type="number"
@@ -24,10 +24,8 @@
           value="<%= product.id %>"
         />
         <div class="product-padding">
-          <input style='font-size: 24px;' type="number" name="quantity" min="1" value="<%= cartQuantity %>" />
-        </div>
-        <div class="product-padding">
-          <input style='font-size: 24px;' type="submit" value="Add to Cart" />
+          <input style='font-size: 16px;' type="number" name="quantity" min="1" value="<%= cartQuantity %>" />
+          <input style='font-size: 16px;' type="submit" value="Add to Cart" />
         </div>
       </form>
     </div>
