@@ -4,35 +4,58 @@
   <body>
     <%- include('./common/navbar.ejs') %>
 
-    <div class="single-item">
-      <div class="left-set">
-        <img src="https://cityfarmer.vn/wp-content/uploads/2019/04/raumuong-1024x683.jpg" alt="" />
-      </div>
-      <div class="right-set">
-        <div class="name"><%= product.name %></div>
-        <div class="price"><%= product.price %>đ</div>
-        <div class="description">
-          <p>Loại: <%= product.category.name %></p>
+<div class="main-container vertical-container-nowrap">
+  <div class="centered item-shadow">
+      <img width="350" height="350" src="https://cityfarmer.vn/wp-content/uploads/2019/04/raumuong-1024x683.jpg">
+    <div class="vertical-list">
+      <div class="name"><%= product.name %></div>
+      <div class="price"><%= product.price %>đ</div>
+      <div>
+        <p class="description-product">Loại: <%= product.category.name %></p>
+        <p class="description-product"> Số lượt mua: <%= product.buyCount %></p>
+        <p class="description-product"> Chú thích:</p>
+        <p class="description-product"> Táo là loại cây ưa khí hậu khô, nóng và ít côn trùng và dịch bệnh. Táo GrannySmith (Táo Xanh) có nguồn gốc từ Úc du nhập vào Mỹ năm 1868. Táo có màu xanh lá, vị chua đậm, rất giòn, nhiều nước.</p>
+      </div>  
+      <form action="/my-cart" method="post">
+        <input
+          type="number"
+          name="productId"
+          hidden
+          value="<%= product.id %>"
+        />
+        <div class="product-padding">
+          <input style='font-size: 16px;' type="number" name="quantity" min="1" value="<%= cartQuantity %>" />
+          <input style='font-size: 16px;' type="submit" value="Add to Cart" />
         </div>
-        <div class="description">
-          <p>Số lượt mua: <%= product.buyCount %></p>
-        </div>
-        <form action="/my-cart" method="post">
-          <input
-            type="number"
-            name="productId"
-            hidden
-            value="<%= product.id %>"
-          />
-          <div class="cart-padding">
-            <input type="number" name="quantity" min="1" value="<%= cartQuantity %>" />
-          </div>
-          <div class="cart-padding">
-            <input type="submit" value="Add to Cart" />
-          </div>
-        </form>
-      </div>
+      </form>
     </div>
+</div>
+
+
+</div>
+
+    <div class="main-container vertical-container">
+      <div class="section-container">
+        <h1>Hot nhất</h1>
+        <div class="grid-list">
+          <% popularProducts.forEach(product => { %>
+            <div class="grid-item item-shadow">
+              <img
+                class="grid-item-image"
+                src="https://cityfarmer.vn/wp-content/uploads/2019/04/raumuong-1024x683.jpg"
+              />
+              <div class="grid-item-info">
+                <p class="item-title">
+                  <a href="/products/<%= product.id %>"><%= product.name %></a>
+                </p>
+                <p class="item-subtitle"><%= product.category.name %></p>
+                <p class="item-subtitle right-text"><%= product.price %> ₫</p>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+
   </body>
 </html>
 
