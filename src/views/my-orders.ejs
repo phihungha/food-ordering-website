@@ -7,34 +7,82 @@
     <div class="main-container">
       <div class="section-container">
         <h1>Đơn hàng</h1>
+        <div class="list-filter-section-container">
+          <p class="list-filter-label">Trạng thái</p>
+          <form class="list-filter-form">
+            <label for="pending">
+              <input
+                type="radio"
+                class="order-status-filter"
+                name="statusFilter"
+                value="pending"
+              />
+              Đang giao</label
+            >
+            <label for="all">
+              <input
+                type="radio"
+                class="order-status-filter"
+                name="statusFilter"
+                value="completed"
+              />
+              Đã giao</label
+            >
+
+            <label for="all">
+              <input
+                type="radio"
+                class="order-status-filter"
+                name="statusFilter"
+                value="canceled"
+              />
+              Bị hủy</label
+            >
+
+            <label for="all">
+              <input
+                type="radio"
+                class="order-status-filter"
+                name="statusFilter"
+                value="all"
+              />
+              Tất cả</label
+            >
+          </form>
+        </div>
         <div class="vertical-list">
           <% orders.forEach(order => { %>
-          <div class="vertical-list-item item-shadow">
-            <img
-              class="vertical-list-item-image"
-              src="https://cityfarmer.vn/wp-content/uploads/2019/04/raumuong-1024x683.jpg"
-            />
-            <p
-              class="item-title vertical-list-item-area vertical-list-item-middle-area"
-            >
-              <a href="/my-orders/<%= order.id %>">Đơn #<%= order.id %></a>
-            </p>
-            <div
-              class="vertical-list-item-area order-vertical-list-item-right-area"
-            >
-              <p class="item-subtitle">
-                Đặt vào: <%= new Intl.DateTimeFormat('en-GB', { dateStyle:
-                'short', timeStyle: 'medium'}).format(order.creationTime) %>
+            <div class="vertical-list-item item-shadow">
+              <img
+                class="vertical-list-item-image"
+                src="https://cityfarmer.vn/wp-content/uploads/2019/04/raumuong-1024x683.jpg"
+              />
+              <p
+                class="item-title vertical-list-item-area vertical-list-item-middle-area"
+              >
+                <a href="/my-orders/<%= order.id %>">Đơn #<%= order.id %></a>
               </p>
-              <p class="item-subtitle">Tổng tiền: <%= order.totalAmount %> ₫</p>
+              <div
+                class="vertical-list-item-area order-vertical-list-item-right-area"
+              >
+                <p class="item-subtitle">
+                  Đặt vào: <%= new Intl.DateTimeFormat('en-GB', { dateStyle:
+                  'short', timeStyle: 'medium'}).format(order.creationTime) %>
+                </p>
+                <p class="item-subtitle">Tổng tiền: <%= order.totalAmount %> ₫</p>
+                <p class="item-subtitle">
+                  Trạng thái: <%- include('./common/order-status.ejs',
+                  {orderStatus: order.status}) %>
+                </p>
+              </div>
             </div>
-          </div>
           <% }) %>
         </div>
       </div>
     </div>
 
     <%- include('./common/footer.ejs') %>
-    <script src="scripts/my-cart.js" />
+
+    <script src="/scripts/my-orders.js"></script>
   </body>
 </html>

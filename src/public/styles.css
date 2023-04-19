@@ -197,6 +197,28 @@ input[type='submit'] {
   margin-right: 45;
 }
 
+.list-filter-section-container {
+  display: flex;
+  flex-direction: row;
+  gap: 25px;
+  padding: 0 0 10 0;
+  align-items: center;
+}
+
+.list-filter-label {
+  font-size: 18;
+  font-weight: bold;
+}
+
+.order-status-filter {
+  font-size: 18;
+}
+
+form.list-filter-form {
+  display: flex;
+  gap: 20px;
+}
+
 /* || Site-wide */
 
 .navbar {
