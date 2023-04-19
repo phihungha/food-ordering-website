@@ -312,26 +312,26 @@ input.search-box {
   gap: 20px;
   justify-content: left;
   flex-wrap: wrap;
-  overflow:auto;
+  overflow: hidden;
 }
 
 .cart-padding {
   padding-top: 10px;
 }
 
-.name{
+.name {
   font-size: 36;
   font-weight: bold;
   color: black;
 }
 
-.price{
+.price {
   font-size: 30;
   font-weight: bold;
   color: grey;
 }
 
-.description-product{
+.description-product {
   font-size: 28;
 }
 
