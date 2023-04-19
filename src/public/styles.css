@@ -322,7 +322,9 @@ input.search-box {
 .order-vertical-list-item-right-area {
   margin-right: 50;
 }
-/* Product detail */
+
+/* || Product details */
+
 .centered {
   display: flex;
   gap: 20px;
