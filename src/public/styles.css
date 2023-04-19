@@ -442,11 +442,6 @@ body {
   padding-bottom: 15;
 }
 
-.clearfix::after {
-  content: "";
-  clear: both;
-  display: table;
-}
 
 .amount {
   text-align: right;
