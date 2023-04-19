@@ -322,3 +322,53 @@ input.search-box {
 .order-vertical-list-item-right-area {
   margin-right: 50;
 }
+/* Product detail */
+.centered {
+  display: flex;
+  gap: 20px;
+  justify-content: left;
+  flex-wrap: nowrap;
+  overflow: hidden;
+  word-break: break-word;
+}
+
+.cart-padding {
+  padding-top: 10px;
+}
+
+.name {
+  font-size: 28;
+  font-weight: bold;
+  color: black;
+  margin: 2 0 0 0;
+  padding: 5;
+}
+
+.price {
+  font-size: 24;
+  font-weight: bold;
+  color: grey;
+  padding: 5;
+}
+
+.description-product {
+  font-size: 20;
+  padding: 5;
+}
+
+.productinfo-container {
+  width: 500px;
+  height: 500px;
+}
+
+.product-padding {
+  margin: 0 0 0 -10;
+  padding: 15;
+}
+
+.vertical-container-nowrap {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex-wrap: nowrap;
+}

@@ -5,12 +5,12 @@ import { Request } from 'express';
 
 @Controller('products')
 export class ProductsController {
-  constructor(private productsProvider: ProductsService) {}
+  constructor(private productsService: ProductsService) {}
 
   @Get()
   @Render('products')
   async getProducts(@Query('search') searchTerm: string | undefined) {
-    const products = await this.productsProvider.getProducts(searchTerm);
+    const products = await this.productsService.getProducts(searchTerm);
     return { products, title: 'ABC Products', searchTerm };
   }
 
@@ -18,14 +18,16 @@ export class ProductsController {
   @Render('product-details')
   async getProductDetails(@Param('id') productId: number, @Req() req: Request) {
     const currentUser = req.user as User | undefined;
-    const result = await this.productsProvider.getProductById(
+    const result = await this.productsService.getProductById(
       productId,
       currentUser?.id,
     );
+    const popularProducts = await this.productsService.getPopularProducts();
     return {
       product: result.product,
       cartQuantity: result.cartQuantity,
-      title: 'ABC Products',
+      popularProducts,
+      title: `${result.product.name} | ABC Food`,
     };
   }
 }
