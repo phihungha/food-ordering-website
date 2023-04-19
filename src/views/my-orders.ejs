@@ -66,10 +66,12 @@
                 class="vertical-list-item-area order-vertical-list-item-right-area"
               >
                 <p class="item-subtitle">
-                  Đặt vào: <%= new Intl.DateTimeFormat('en-GB', { dateStyle:
-                  'short', timeStyle: 'medium'}).format(order.creationTime) %>
+                  Đặt vào: <%= defaultDateTimeFormatter.format(order.creationTime)
+                  %>
                 </p>
-                <p class="item-subtitle">Tổng tiền: <%= order.totalAmount %> ₫</p>
+                <p class="item-subtitle">
+                  Tổng tiền: <%= currencyFormatter.format(order.totalAmount) %>
+                </p>
                 <p class="item-subtitle">
                   Trạng thái: <%- include('./common/order-status.ejs',
                   {orderStatus: order.status}) %>

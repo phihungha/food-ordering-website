@@ -17,7 +17,9 @@
           <div class="grid-order-section">
             <div class="grid-order-info">
               <p class="_section-name">Tạo vào</p>
-              <p class="item-content"><%= order.creationTime %></p>
+              <p class="item-content">
+                <%= defaultDateTimeFormatter.format(order.creationTime) %>
+              </p>
             </div>
           </div>
         </div>
@@ -34,7 +36,9 @@
           <div class="grid-order-section">
             <div class="grid-order-info">
               <p class="_section-name">Hoàn tất</p>
-              <p class="item-content"><%= order.finishedTime %></p>
+              <p class="item-content">
+                <%= defaultDateTimeFormatter.format(order.finishedTime) %>
+              </p>
             </div>
           </div>
         </div>
@@ -56,7 +60,9 @@
             </p>
             <div class="vertical-list-item-area vertical-list-item-right-area">
               <p class="item-subtitle">SL: <%= item.quantity %></p>
-              <p class="item-subtitle"><%= item.unitPrice %> ₫</p>
+              <p class="item-subtitle">
+                <%= currencyFormatter.format(item.unitPrice) %>
+              </p>
             </div>
           </div>
         <% }) %>
@@ -64,7 +70,9 @@
 
       <div class="total-amount-container">
         <p class="total-amount-title">Tổng cộng</p>
-        <p class="total-amount-value"><%= order.totalAmount %> ₫</p>
+        <p class="total-amount-value">
+          <%= currencyFormatter.format(order.totalAmount) %>
+        </p>
       </div>
 
       <% if (isCancelable) { %>

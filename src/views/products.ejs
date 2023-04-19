@@ -13,28 +13,17 @@
           </h1>
         <% } else { %>
           <h1>Tất cả sản phẩm</h1>
-        <% } %> <% if (products.length === 0) { %>
+        <% } %>
+        <% if (products.length === 0) { %>
           <div class="grey-message-box">
             <p>Không tìm thấy sản phẩm nào với tên "<%= searchTerm %>"</p>
           </div>
         <% } else { %>
-        <div class="grid-list">
-          <% products.forEach(product => { %>
-            <div class="grid-item item-shadow">
-              <img
-                class="grid-item-image"
-                src="https://cityfarmer.vn/wp-content/uploads/2019/04/raumuong-1024x683.jpg"
-              />
-              <div class="grid-item-info">
-                <p class="item-title">
-                  <a href="/products/<%= product.id %>"><%= product.name %></a>
-                </p>
-                <p class="item-subtitle"><%= product.category.name %></p>
-                <p class="item-subtitle right-text"><%= product.price %> ₫</p>
-              </div>
-            </div>
-          <% }) %>
-        </div>
+          <div class="grid-list">
+            <% products.forEach(product => { %>
+              <%- include('./common/product-grid-item.ejs', { product }) %>
+            <% }) %>
+          </div>
         <% } %>
       </div>
     </div>
