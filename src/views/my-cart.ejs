@@ -10,9 +10,7 @@
         <div class="vertical-list">
           <% if (cart.cartItems.length === 0) { %>
             <div class="grey-message-box">
-              <p>
-                Bạn chưa chọn gì. Hãy mua gì đó <a href="/products">ở đây</a>
-              </p>
+              <p>Bạn chưa chọn gì. Hãy mua gì đó <a href="/products">ở đây</a></p>
             </div>
           <% } else { %> <% cart.cartItems.forEach(cartItem => { %>
             <div class="vertical-list-item item-shadow">
@@ -28,8 +26,10 @@
                 >
               </p>
               <div class="vertical-list-item-area vertical-list-item-right-area">
-                <p class="item-title">SL: <%= cartItem.quantity %></p>
-                <p class="item-title"><%= cartItem.product.price %> ₫</p>
+                <p class="item-subtitle">SL: <%= cartItem.quantity %></p>
+                <p class="item-subtitle">
+                  <%= currencyFormatter.format(cartItem.product.price) %>
+                </p>
               </div>
 
               <div class="vertical-list-item-area">
@@ -37,7 +37,9 @@
                   class="delete-btn cart-item-delete-btn"
                   data-productid="<%= cartItem.product.id %>"
                 >
-                  <img class="icon" src="images/trash-can.svg" />
+                  <span class="delete-icon fa-icon material-symbols-outlined">
+                    delete
+                  </span>
                 </button>
               </div>
             </div>
@@ -47,7 +49,9 @@
 
       <div class="total-amount-container">
         <p class="total-amount-title">Tổng cộng</p>
-        <p class="total-amount-value"><%= cart.totalAmount %> ₫</p>
+        <p class="total-amount-value">
+          <%= currencyFormatter.format(cart.totalAmount) %>
+        </p>
       </div>
 
       <form

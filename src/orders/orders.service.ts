@@ -4,6 +4,7 @@ import { PrismaService } from 'nestjs-prisma';
 import { CartItemDto } from 'src/carts/cart-item.dto';
 import { MyCartService } from 'src/carts/my-cart.service';
 import { ProductsService } from 'src/products/products.service';
+import { OrderStatusQuery } from './order-status.type';
 
 @Injectable()
 export class OrdersService {
@@ -13,10 +14,32 @@ export class OrdersService {
     private productsService: ProductsService,
   ) {}
 
-  async getMyOrders(customerId: number): Promise<Order[]> {
+  async getMyOrders(
+    customerId: number,
+    statusFilter: OrderStatusQuery,
+  ): Promise<Order[]> {
+    let orderStatusFilter;
+    switch (statusFilter) {
+      case 'pending':
+        orderStatusFilter = OrderStatus.Pending;
+        break;
+      case 'completed':
+        orderStatusFilter = OrderStatus.Completed;
+        break;
+      case 'canceled':
+        orderStatusFilter = OrderStatus.Canceled;
+        break;
+      case 'all':
+        orderStatusFilter = undefined;
+        break;
+      default:
+        orderStatusFilter = OrderStatus.Pending;
+    }
+
     return await this.prisma.order.findMany({
       where: {
         customerId,
+        status: orderStatusFilter,
       },
       orderBy: {
         id: 'desc',
