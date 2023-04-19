@@ -286,7 +286,7 @@ input.search-box {
   color: #e01b24;
 }
 
-/* Auth pages (login and sign up) */
+/* || Auth pages (login and sign up) */
 
 .auth-field-container {
   width: 450;
@@ -296,7 +296,7 @@ input.search-box {
   color: #13678a;
 }
 
-/* Order and cart pages */
+/* || Order and cart pages */
 
 .total-amount-container {
   display: flex;
@@ -374,6 +374,7 @@ input.search-box {
   gap: 20px;
   flex-wrap: nowrap;
 }
+
 
 /*Order detail*/
 ._order-id {
