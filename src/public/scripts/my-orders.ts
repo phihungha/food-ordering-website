@@ -8,7 +8,7 @@ document.querySelectorAll('.order-status-filter').forEach((e) => {
 
 function setSelectedOrderFilterRadioBtn() {
   const queryParams = new URLSearchParams(window.location.search);
-  const orderStatusFilter = queryParams.get('status');
+  const orderStatusFilter = queryParams.get('status') ?? 'pending';
   const elem = document.querySelector(
     `.order-status-filter[value="${orderStatusFilter}"]`,
   );

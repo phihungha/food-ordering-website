@@ -374,3 +374,51 @@ input.search-box {
   gap: 20px;
   flex-wrap: nowrap;
 }
+
+/*Order detail*/
+
+._order-id {
+  color: black;
+  font-size: 24px;
+  padding-bottom: 12px;
+}
+
+._section-name {
+  color: black;
+  font-size: 16px;
+  border-bottom: 1px solid black;
+  padding-top: 15;
+  padding-bottom: 15;
+  font-weight: bold;
+}
+
+.item-content {
+  font-size: 14;
+  padding-top: 15;
+  padding-bottom: 15;
+}
+
+.amount {
+  text-align: right;
+  text-transform: uppercase;
+  color: black;
+  font-size: 24px;
+  font-weight: bold;
+  padding-bottom: 15;
+  padding-top: 10;
+}
+
+.grid-orderinfo {
+  display: flex;
+  gap: 25px;
+  justify-content: left;
+  flex-wrap: nowrap;
+}
+.vertical-orderinfo {
+  display: inline;
+  flex-direction: column;
+  gap: 25px;
+  padding: 25px;
+  width: 43%;
+  height: 50%;
+}
