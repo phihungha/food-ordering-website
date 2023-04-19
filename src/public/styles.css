@@ -1,5 +1,9 @@
 
 /* || General */
+:root {
+  --primary-color: #012030;
+}
+
 * {
   font-family: Poppins, sans-serif;
   margin: 0;
@@ -33,6 +37,7 @@ input {
 h1 {
   font-size: 28px;
   font-weight: bold;
+  color: var(--primary-color);
 }
 
 button {
@@ -43,7 +48,7 @@ button {
 }
 
 a:link {
-  color: black;
+  color: var(--primary-color);
   text-decoration: none;
 }
 
@@ -107,11 +112,14 @@ input[type='submit'] {
 
 .item-title {
   font-size: 20;
+  font-weight: 600;
 }
 
 .item-subtitle {
   font-size: 18;
-  color: #7b7b7b;
+  opacity: 70%;
+  color: var(--primary-color);
+  font-weight: 350;
 }
 
 .item-shadow {
@@ -190,6 +198,28 @@ input[type='submit'] {
   margin-right: 45;
 }
 
+.list-filter-section-container {
+  display: flex;
+  flex-direction: row;
+  gap: 25px;
+  padding: 0 0 10 0;
+  align-items: center;
+}
+
+.list-filter-label {
+  font-size: 18;
+  font-weight: bold;
+}
+
+.order-status-filter {
+  font-size: 18;
+}
+
+form.list-filter-form {
+  display: flex;
+  gap: 20px;
+}
+
 /* || Site-wide */
 
 .navbar {
@@ -226,11 +256,11 @@ ul.navbar-link-list {
 }
 
 .navbar-link-list li a:link {
-  color: black;
+  color: var(--primary-color);
 }
 
 .navbar-link-list li a:visited {
-  color: black;
+  color: var(--primary-color);
 }
 
 input.search-box {
