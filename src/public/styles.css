@@ -457,3 +457,19 @@ body {
   padding-bottom: 15;
   padding-top: 10;
 }
+
+.grid-orderinfo {
+  display: flex;
+  gap: 50px;
+  justify-content: left;
+  flex-wrap: wrap;
+  overflow: hidden;
+}
+.vertical-orderinfo {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  padding:25px;
+  width: 43%;
+  height: 50%;
+}

@@ -6,8 +6,8 @@
     <div class="main-container">
       <p class="_order-id">Thông tin Order <%= order.id %></p>
       
-        <div class="grid-list item-shadow"> 
-          <div class="vertical-list">
+        <div class="grid-orderinfo item-shadow"> 
+          <div class="vertical-orderinfo">
             <div class="grid-order-section">
               <div class="grid-order-info">
                   <p class="_section-name">Địa chỉ</p>
@@ -21,7 +21,7 @@
                 </div>
             </div>
           </div>
-        <div class="vertical-list">
+        <div class="vertical-orderinfo">
           <div class="grid-order-section">
             <div class="grid-order-info">
                 <p class="_section-name">Trạng thái</p>
@@ -60,6 +60,11 @@
         <% }) %>
       </div>
 
+      <div class="total-amount-container">
+        <p class="total-amount-title">Tổng cộng</p>
+        <p class="total-amount-value"><%= order.totalAmount %> ₫</p>
+      </div>
+
       <% if (isCancelable) { %>
         <button id="order-cancel-btn" data-orderId="<%= order.id %>">
           Cancel
@@ -67,7 +72,6 @@
       <% } %>
     </div>
 
-    <p class="amount">Tổng tiền: <%= order.totalAmount %></p>
 
     <%- include('./common/footer.ejs') %>
 
