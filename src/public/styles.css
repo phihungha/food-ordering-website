@@ -327,7 +327,7 @@ input.search-box {
   display: flex;
   gap: 20px;
   justify-content: left;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   overflow: hidden;
   word-break: break-word;
 }
@@ -362,5 +362,13 @@ input.search-box {
 }
 
 .product-padding {
-  padding: 10;
+  margin: 0 0 0 -10;
+  padding: 15;
+}
+
+.vertical-container-nowrap {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex-wrap: nowrap;
 }
