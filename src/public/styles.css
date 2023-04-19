@@ -243,6 +243,15 @@ input.search-box {
   font-size: 16;
 }
 
+.fa-icon {
+  font-size: 24;
+  font-family: FontAwesome;
+}
+
+.delete-icon {
+  color: #e01b24;
+}
+
 /* Auth pages (login and sign up) */
 
 .auth-field-container {

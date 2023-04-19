@@ -9,38 +9,36 @@
         <h1>Giỏ hàng</h1>
         <div class="vertical-list">
           <% if (cart.cartItems.length === 0) { %>
-            <div class="grey-message-box">
-              <p>
-                Bạn chưa chọn gì. Hãy mua gì đó <a href="/products">ở đây</a>
-              </p>
-            </div>
+          <div class="grey-message-box">
+            <p>Bạn chưa chọn gì. Hãy mua gì đó <a href="/products">ở đây</a></p>
+          </div>
           <% } else { %> <% cart.cartItems.forEach(cartItem => { %>
-            <div class="vertical-list-item item-shadow">
-              <img
-                class="vertical-list-item-image"
-                src="https://cityfarmer.vn/wp-content/uploads/2019/04/raumuong-1024x683.jpg"
-              />
-              <p
-                class="item-title vertical-list-item-area vertical-list-item-middle-area"
+          <div class="vertical-list-item item-shadow">
+            <img
+              class="vertical-list-item-image"
+              src="https://cityfarmer.vn/wp-content/uploads/2019/04/raumuong-1024x683.jpg"
+            />
+            <p
+              class="item-title vertical-list-item-area vertical-list-item-middle-area"
+            >
+              <a href="/products/<%= cartItem.product.id %>"
+                ><%= cartItem.product.name %></a
               >
-                <a href="/products/<%= cartItem.product.id %>"
-                  ><%= cartItem.product.name %></a
-                >
-              </p>
-              <div class="vertical-list-item-area vertical-list-item-right-area">
-                <p class="item-title">SL: <%= cartItem.quantity %></p>
-                <p class="item-title"><%= cartItem.product.price %> ₫</p>
-              </div>
-
-              <div class="vertical-list-item-area">
-                <button
-                  class="delete-btn cart-item-delete-btn"
-                  data-productid="<%= cartItem.product.id %>"
-                >
-                  <img class="icon" src="images/trash-can.svg" />
-                </button>
-              </div>
+            </p>
+            <div class="vertical-list-item-area vertical-list-item-right-area">
+              <p class="item-title">SL: <%= cartItem.quantity %></p>
+              <p class="item-title"><%= cartItem.product.price %> ₫</p>
             </div>
+
+            <div class="vertical-list-item-area">
+              <button
+                class="delete-btn cart-item-delete-btn"
+                data-productid="<%= cartItem.product.id %>"
+              >
+                <i class="delete-icon fa-icon fa-regular fa-trash-can"></i>
+              </button>
+            </div>
+          </div>
           <% }) } %>
         </div>
       </div>
