@@ -472,13 +472,12 @@ body {
 
 .grid-orderinfo {
   display: flex;
-  gap: 50px;
+  gap: 25px;
   justify-content: left;
-  flex-wrap: wrap;
-  overflow: hidden;
+  flex-wrap: nowrap;
 }
 .vertical-orderinfo {
-  display: flex;
+  display: inline;
   flex-direction: column;
   gap: 25px;
   padding: 25px;
