@@ -5,38 +5,40 @@
     <%- include('./common/navbar.ejs') %>
     <div class="main-container">
       <p class="_order-id">Thông tin Order <%= order.id %></p>
-      
-        <div class="grid-orderinfo item-shadow"> 
-          <div class="vertical-orderinfo">
-            <div class="grid-order-section">
-              <div class="grid-order-info">
-                  <p class="_section-name">Địa chỉ</p>
-                <p class="item-content"><%= order.deliveryAddress %></p>
-              </div>
-            </div>
-              <div class="grid-order-section">
-                <div class="grid-order-info">
-                    <p class="_section-name">Tạo vào</p>
-                  <p class="item-content"><%= order.creationTime %></p>
-                </div>
-            </div>
-          </div>
+
+      <div class="grid-orderinfo item-shadow">
         <div class="vertical-orderinfo">
           <div class="grid-order-section">
             <div class="grid-order-info">
-                <p class="_section-name">Trạng thái</p>
-              <p class="item-content"><%= order.status %></p>
+              <p class="_section-name">Địa chỉ</p>
+              <p class="item-content"><%= order.deliveryAddress %></p>
             </div>
           </div>
-            <div class="grid-order-section">
-              <div class="grid-order-info">
-                  <p class="_section-name">Hoàn tất</p>
-                <p class="item-content"><%= order.finishedTime %></p>
-              </div>
+          <div class="grid-order-section">
+            <div class="grid-order-info">
+              <p class="_section-name">Tạo vào</p>
+              <p class="item-content"><%= order.creationTime %></p>
+            </div>
+          </div>
+        </div>
+        <div class="vertical-orderinfo">
+          <div class="grid-order-section">
+            <div class="grid-order-info">
+              <p class="_section-name">Trạng thái</p>
+              <p class="item-content">
+                <%- include('./common/order-status.ejs', {orderStatus:
+                order.status}) %>
+              </p>
+            </div>
+          </div>
+          <div class="grid-order-section">
+            <div class="grid-order-info">
+              <p class="_section-name">Hoàn tất</p>
+              <p class="item-content"><%= order.finishedTime %></p>
+            </div>
           </div>
         </div>
       </div>
-      
 
       <div class="vertical-list">
         <% order.items.forEach(item => { %>
@@ -53,8 +55,8 @@
               >
             </p>
             <div class="vertical-list-item-area vertical-list-item-right-area">
-              <p class="item-title">SL: <%= item.quantity %></p>
-              <p class="item-title"><%= item.unitPrice %> ₫</p>
+              <p class="item-subtitle">SL: <%= item.quantity %></p>
+              <p class="item-subtitle"><%= item.unitPrice %> ₫</p>
             </div>
           </div>
         <% }) %>
@@ -72,11 +74,8 @@
       <% } %>
     </div>
 
-
     <%- include('./common/footer.ejs') %>
 
     <script src="/scripts/order-details.js"></script>
   </body>
 </html>
-
-
