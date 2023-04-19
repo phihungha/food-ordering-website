@@ -39,6 +39,11 @@ h1 {
   color: var(--primary-color);
 }
 
+p {
+  font-weight: 350;
+  color: var(--primary-color);
+}
+
 button {
   border-width: 0;
   border-radius: 5px;
@@ -263,6 +268,15 @@ input.search-box {
 
 .auth-field-container {
   width: 450;
+}
+
+.text-link {
+  color: var(--primary-color);
+}
+
+.login:link,
+.signup:link {
+  color: #13678a;
 }
 
 /* Order and cart pages */
