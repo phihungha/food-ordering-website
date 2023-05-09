@@ -3,7 +3,6 @@ import { Order, OrderStatus } from '@prisma/client';
 import { PrismaService } from 'nestjs-prisma';
 import { CartItemDto } from 'src/carts/cart-item.dto';
 import { MyCartService } from 'src/carts/my-cart.service';
-import { ProductsService } from 'src/products/products.service';
 import { OrderStatusQuery } from './order-status.type';
 
 @Injectable()
@@ -11,7 +10,6 @@ export class OrdersService {
   constructor(
     private prisma: PrismaService,
     private myCartService: MyCartService,
-    private productsService: ProductsService,
   ) {}
 
   async getMyOrders(
@@ -88,20 +86,41 @@ export class OrdersService {
   ): Promise<Order> {
     const cart = await this.myCartService.getCart(customerId);
     const orderItems = this.generateOrderItems(cart.cartItems);
-    await this.myCartService.clearCart(customerId);
-    const order = await this.prisma.order.create({
-      data: {
-        customerId,
-        deliveryAddress,
-        totalAmount: cart.totalAmount,
-        status: OrderStatus.Pending,
-        items: { create: orderItems },
-      },
+
+    const newOrder = await this.prisma.$transaction(async (client) => {
+      // Create new order
+      const order = await client.order.create({
+        data: {
+          customerId,
+          deliveryAddress,
+          totalAmount: cart.totalAmount,
+          status: OrderStatus.Pending,
+          items: { create: orderItems },
+        },
+      });
+
+      // Update product buy counts
+      const productIds = orderItems.map((i) => i.productId);
+      await client.product.updateMany({
+        where: {
+          id: { in: productIds },
+        },
+        data: {
+          buyCount: { increment: 1 },
+        },
+      });
+
+      // Clear cart
+      await client.cartItem.deleteMany({
+        where: {
+          customerId,
+        },
+      });
+
+      return order;
     });
-    await this.productsService.updateProductsBuyCount(
-      orderItems.map((i) => i.productId),
-    );
-    return order;
+
+    return newOrder;
   }
 
   async cancelOrder(orderId: number, userId: number): Promise<Order[]> {
