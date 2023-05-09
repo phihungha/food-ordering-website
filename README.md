@@ -1,6 +1,6 @@
 # Simple Food Ordering Website - Course project at UIT
 
-Technologies:
+Technology:
 
 - NestJS
 - EJS
