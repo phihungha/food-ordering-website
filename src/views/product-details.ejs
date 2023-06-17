@@ -9,7 +9,7 @@
         <img
           width="350"
           height="350"
-          src="https://cityfarmer.vn/wp-content/uploads/2019/04/raumuong-1024x683.jpg"
+          src="<%= product.imageUrl %>"
         />
         <div class="vertical-list">
           <div class="name"><%= product.name %></div>
@@ -21,11 +21,7 @@
               Loại: <%= product.category.name %>
             </p>
             <p class="description-product">Mô tả:</p>
-            <p class="description-product">
-              Táo là loại cây ưa khí hậu khô, nóng và ít côn trùng và dịch bệnh.
-              Táo GrannySmith (Táo Xanh) có nguồn gốc từ Úc du nhập vào Mỹ năm
-              1868. Táo có màu xanh lá, vị chua đậm, rất giòn, nhiều nước.
-            </p>
+            <p class="description-product"><%= product.description %></p>
           </div>
           <form action="/my-cart" method="post">
             <input
