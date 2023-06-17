@@ -45,12 +45,34 @@ export class OrdersService {
     });
   }
 
-  async getOrderDetails(orderId: number, userId: number): Promise<Order> {
-    const result = await this.prisma.order.findMany({
-      where: {
-        id: orderId,
-        customerId: userId,
-      },
+  async getOrders(statusFilter: OrderStatusQuery) {
+    let orderStatusFilter;
+    switch (statusFilter) {
+      case 'pending':
+        orderStatusFilter = OrderStatus.Pending;
+        break;
+      case 'completed':
+        orderStatusFilter = OrderStatus.Completed;
+        break;
+      case 'canceled':
+        orderStatusFilter = OrderStatus.Canceled;
+        break;
+      case 'all':
+        orderStatusFilter = undefined;
+        break;
+      default:
+        orderStatusFilter = OrderStatus.Pending;
+    }
+
+    return await this.prisma.order.findMany({
+      where: { status: orderStatusFilter },
+      orderBy: { id: 'desc' },
+    });
+  }
+
+  async getOrderDetails(orderId: number): Promise<Order> {
+    const order = await this.prisma.order.findUnique({
+      where: { id: orderId },
       include: {
         items: {
           include: {
@@ -60,11 +82,30 @@ export class OrdersService {
       },
     });
 
-    if (!result.length) {
+    if (order === null) {
       throw new NotFoundException('Order not found');
     }
 
-    return result[0];
+    return order;
+  }
+
+  async getMyOrderDetails(orderId: number, userId: number): Promise<Order> {
+    const order = await this.prisma.order.findUnique({
+      where: { id: orderId },
+      include: {
+        items: {
+          include: {
+            product: true,
+          },
+        },
+      },
+    });
+
+    if (order === null || order.customerId !== userId) {
+      throw new NotFoundException('Order not found');
+    }
+
+    return order;
   }
 
   generateOrderItems(cartItems: CartItemDto[]) {
@@ -102,20 +143,12 @@ export class OrdersService {
       // Update product buy counts
       const productIds = orderItems.map((i) => i.productId);
       await client.product.updateMany({
-        where: {
-          id: { in: productIds },
-        },
-        data: {
-          buyCount: { increment: 1 },
-        },
+        where: { id: { in: productIds } },
+        data: { buyCount: { increment: 1 } },
       });
 
       // Clear cart
-      await client.cartItem.deleteMany({
-        where: {
-          customerId,
-        },
-      });
+      await client.cartItem.deleteMany({ where: { customerId } });
 
       return order;
     });
@@ -123,23 +156,61 @@ export class OrdersService {
     return newOrder;
   }
 
-  async cancelOrder(orderId: number, userId: number): Promise<Order[]> {
-    const result = (await this.prisma.order.updateMany({
-      where: {
-        id: orderId,
-        customerId: userId,
-        status: OrderStatus.Pending,
-      },
-      data: {
-        status: OrderStatus.Canceled,
-        finishedTime: new Date(),
-      },
-    })) as unknown as Order[];
+  async cancelOrder(orderId: number): Promise<Order> {
+    return await this.prisma.$transaction(async (client) => {
+      const order = await client.order.update({
+        where: { id: orderId },
+        data: {
+          status: OrderStatus.Canceled,
+          finishedTime: new Date(),
+        },
+      });
 
-    if (!result.length) {
-      throw new NotFoundException('Order not found');
-    }
+      if (order.status !== OrderStatus.Pending) {
+        throw new NotFoundException('Order is not pending');
+      }
 
-    return result;
+      return order;
+    });
+  }
+
+  async cancelMyOrder(orderId: number, userId: number): Promise<Order> {
+    return await this.prisma.$transaction(async (client) => {
+      const order = await client.order.update({
+        where: { id: orderId },
+        data: {
+          status: OrderStatus.Canceled,
+          finishedTime: new Date(),
+        },
+      });
+
+      if (order.customerId !== userId) {
+        throw new NotFoundException('Order not found');
+      }
+
+      if (order.status !== OrderStatus.Pending) {
+        throw new NotFoundException('Order is not pending');
+      }
+
+      return order;
+    });
+  }
+
+  async completeOrder(orderId: number): Promise<Order> {
+    return await this.prisma.$transaction(async (client) => {
+      const order = await client.order.update({
+        where: { id: orderId },
+        data: {
+          status: OrderStatus.Completed,
+          finishedTime: new Date(),
+        },
+      });
+
+      if (order.status !== OrderStatus.Pending) {
+        throw new NotFoundException('Order is not pending');
+      }
+
+      return order;
+    });
   }
 }

@@ -42,7 +42,7 @@ export class MyOrdersController {
   @Render('order-details')
   async getOrderDetails(@Param('id') orderId: number, @Req() req: Request) {
     const currentUser = req.user as User;
-    const order = await this.ordersService.getOrderDetails(
+    const order = await this.ordersService.getMyOrderDetails(
       orderId,
       currentUser.id,
     );
@@ -74,6 +74,6 @@ export class MyOrdersController {
     @Req() req: Request,
   ) {
     const currentUser = req.user as User;
-    return await this.ordersService.cancelOrder(orderId, currentUser.id);
+    return await this.ordersService.cancelMyOrder(orderId, currentUser.id);
   }
 }
