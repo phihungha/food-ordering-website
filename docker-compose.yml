@@ -1,6 +1,6 @@
 services:
   abc-fos-server:
-    container_name: fos-server
+    container_name: abc-fos-server
     build:
       context: .
       dockerfile: Dockerfile
@@ -12,7 +12,7 @@ services:
       - abc-fos-db
 
   abc-fos-db:
-    container_name: fos-db
+    container_name: abc-fos-db
     image: postgres:15
     ports:
       - 5432:5432
