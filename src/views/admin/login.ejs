@@ -1,0 +1,30 @@
+<html lang="en">
+  <%- include('../common/head.ejs') %>
+
+  <body>
+    <%- include('./common/navbar.ejs') %>
+
+    <div class="main-container center-container">
+      <h1 class="title">Đăng nhập</h1>
+      <form
+        action="/admin/login"
+        method="post"
+        class="vertical-container auth-field-container"
+      >
+        <input placeholder="Email..." required type="email" name="email" />
+        <input
+          placeholder="Mật khẩu..."
+          required
+          type="password"
+          name="password"
+        />
+        <input class="submit-btn" type="submit" value="Đăng nhập" />
+      </form>
+      <p>
+        Chưa có tài khoản? Hãy <a class="text-link" href="signup">đăng ký</a>
+      </p>
+    </div>
+
+    <%- include('../common/footer.ejs') %>
+  </body>
+</html>

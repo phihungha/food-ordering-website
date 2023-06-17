@@ -235,6 +235,10 @@ form.list-filter-form {
   padding: 0 20;
 }
 
+.admin-navbar {
+  background-color: #ff6e6e;
+}
+
 .logo-container {
   flex: 0.5;
   height: 35;
@@ -246,13 +250,14 @@ ul.navbar-link-list {
   flex: 1;
   display: flex;
   justify-content: center;
+  align-items: center;
+  gap: 13px;
   list-style: none;
   padding: 0;
 }
 
 .navbar-link-list li {
   font-size: 16;
-  margin: 0 13;
 }
 
 .navbar-link-list li a {
@@ -265,6 +270,14 @@ ul.navbar-link-list {
 
 .navbar-link-list li a:visited {
   color: var(--primary-color);
+}
+
+.admin-navbar-link-list li a:link {
+  color: white;
+}
+
+.admin-navbar-link-list li a:visited {
+  color: white;
 }
 
 input.search-box {

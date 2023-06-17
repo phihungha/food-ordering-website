@@ -9,6 +9,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { LoginStatusInterceptor } from './login-status.interceptor';
 import { AuthMiddleware } from './auth.middleware';
+import { AdminAuthController } from './admin-auth.controller';
 
 @Module({
   imports: [
@@ -33,7 +34,7 @@ import { AuthMiddleware } from './auth.middleware';
       useClass: LoginStatusInterceptor,
     },
   ],
-  controllers: [CustomerAuthController],
+  controllers: [CustomerAuthController, AdminAuthController],
 })
 export class AuthModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
