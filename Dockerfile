@@ -3,8 +3,9 @@ WORKDIR /app
 COPY package*.json ./
 COPY nest-cli.json ./
 COPY prisma/ ./prisma/
-RUN npm install
-COPY . .
+RUN --mount=type=cache,target=~/.npm npm install
+COPY tsconfig.json ./
+COPY src/ ./src/
 RUN npm run build
 
 FROM node:18
