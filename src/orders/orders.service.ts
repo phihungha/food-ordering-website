@@ -45,7 +45,7 @@ export class OrdersService {
     });
   }
 
-  async getOrders(statusFilter: OrderStatusQuery) {
+  async getOrders(statusFilter: OrderStatusQuery): Promise<Order[]> {
     let orderStatusFilter;
     switch (statusFilter) {
       case 'pending':

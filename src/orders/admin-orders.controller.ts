@@ -7,14 +7,13 @@ import {
   Patch,
   Query,
   Render,
-  Req,
   UseGuards,
 } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { OrderStatus } from '@prisma/client';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { OrderStatusQuery } from './order-status.type';
-import { UpdateOrderDto } from './update-order.dto';
+import { OrderUpdateDto } from './update-order.dto';
 
 @Controller('admin/orders')
 @UseGuards(JwtAuthGuard)
@@ -43,7 +42,7 @@ export class AdminOrdersController {
   @Patch(':id')
   async completeOrder(
     @Param('id', ParseIntPipe) orderId: number,
-    @Body() body: UpdateOrderDto,
+    @Body() body: OrderUpdateDto,
   ) {
     if (body.status === 'completed') {
       return await this.ordersService.completeOrder(orderId);

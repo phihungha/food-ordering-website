@@ -1,6 +1,6 @@
 import { IsIn } from 'class-validator';
 
-export class UpdateOrderDto {
+export class OrderUpdateDto {
   @IsIn(['canceled, completed'])
   status: string;
 }
