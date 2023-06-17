@@ -38,6 +38,8 @@ CREATE TABLE "Customer" (
 CREATE TABLE "Product" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
+    "imageUrl" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
     "categoryId" INTEGER NOT NULL,
     "price" MONEY NOT NULL,
     "unit" TEXT NOT NULL,
@@ -70,6 +72,7 @@ CREATE TABLE "Order" (
     "customerId" INTEGER NOT NULL,
     "creationTime" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "finishedTime" TIMESTAMP(3),
+    "deliveryAddress" TEXT NOT NULL,
     "status" "OrderStatus" NOT NULL,
     "totalAmount" MONEY NOT NULL,
 

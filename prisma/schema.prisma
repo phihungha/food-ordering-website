@@ -50,6 +50,8 @@ model Customer {
 model Product {
   id           Int             @id @default(autoincrement())
   name         String          @unique
+  imageUrl     String
+  description  String
   category     ProductCategory @relation(fields: [categoryId], references: [id])
   categoryId   Int
   price        Decimal         @db.Money

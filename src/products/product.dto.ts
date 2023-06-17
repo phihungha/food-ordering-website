@@ -7,6 +7,9 @@ export class ProductDto {
   @IsUrl()
   imageUrl: string;
 
+  @IsNotEmpty()
+  description: string;
+
   @IsNumber()
   categoryId: number;
 

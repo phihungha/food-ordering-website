@@ -92,6 +92,8 @@ export class ProductsService {
     return await this.prisma.product.create({
       data: {
         name: product.name,
+        imageUrl: product.imageUrl,
+        description: product.description,
         category: { connect: { id: product.categoryId } },
         price: product.price,
         unit: product.unit,
@@ -104,6 +106,8 @@ export class ProductsService {
       where: { id },
       data: {
         name: product.name,
+        imageUrl: product.imageUrl,
+        description: product.description,
         category: { connect: { id: product.categoryId } },
         price: product.price,
         unit: product.unit,
