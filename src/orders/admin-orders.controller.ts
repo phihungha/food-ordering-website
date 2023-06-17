@@ -40,7 +40,7 @@ export class AdminOrdersController {
   }
 
   @Patch(':id')
-  async completeOrder(
+  async updateOrder(
     @Param('id', ParseIntPipe) orderId: number,
     @Body() body: OrderUpdateDto,
   ) {
