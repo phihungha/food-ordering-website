@@ -9,6 +9,7 @@
     "format": "prettier --write .",
     "format-check": "prettier --check .",
     "lint": "eslint \"{src,test}/**/*.ts\" --cache --fix",
+    "ci-lint": "eslint \"{src,test}/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug 0.0.0.0:9229 --watch",
