@@ -2,7 +2,6 @@ const path = require('path');
 
 const client = {
   entry: './src/public/scripts/index.ts',
-  mode: 'none',
   target: 'web',
   externalsPresets: {},
   externals: [],
