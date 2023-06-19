@@ -5,6 +5,7 @@ COPY prisma/ ./prisma/
 RUN --mount=type=cache,target=~/.npm npm install
 COPY nest-cli.json ./
 COPY tsconfig.json ./
+COPY webpack.config.js ./
 COPY src/ ./src/
 RUN npm run build
 
