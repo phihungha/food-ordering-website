@@ -255,7 +255,7 @@ ul.navbar-link-list {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 13px;
+  gap: 20px;
   list-style: none;
   padding: 0;
 }
