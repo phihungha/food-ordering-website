@@ -224,6 +224,10 @@ form.list-filter-form {
   gap: 20px;
 }
 
+.hidden {
+  display: none;
+}
+
 /* || Site-wide */
 
 .navbar {
@@ -388,7 +392,7 @@ input.search-box {
   flex-wrap: nowrap;
 }
 
-/*Order detail*/
+/* || Order detail*/
 
 ._order-id {
   color: black;

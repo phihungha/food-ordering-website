@@ -7,14 +7,21 @@
     placeholder="Nhập tên sản phẩm cần tìm..."
     value="<%= locals?.searchTerm %>"
   />
-  <ul class="navbar-link-list">
+  <ul id="logged-out-navbar" class="navbar-link-list">
     <li>
       <a href="/products"
         ><span class="fa-icon material-symbols-outlined"> widgets </span></a
       >
     </li>
-
-    <% if (isSignedIn) { %>
+    <li><a href="/login">Đăng nhập</a></li>
+    <li><a href="/signup">Đăng ký</a></li>
+  </ul>
+  <ul id="logged-in-navbar" class="hidden">
+    <li>
+      <a href="/products"
+        ><span class="fa-icon material-symbols-outlined"> widgets </span></a
+      >
+    </li>
     <li>
       <a href="/my-cart">
         <span class="fa-icon material-symbols-outlined"> shopping_cart </span>
@@ -28,14 +35,14 @@
       >
     </li>
     <li>
+      <p>Welcome</p>
+      <p id="currentUserName"></p>
+    </li>
+    <li>
       <a href="/logout"
         ><span class="fa-icon material-symbols-outlined"> logout </span></a
       >
     </li>
-    <% } else { %>
-    <li><a href="/login">Đăng nhập</a></li>
-    <li><a href="/signup">Đăng ký</a></li>
-    <% } %>
   </ul>
 
   <script src="/scripts/navbar.js"></script>

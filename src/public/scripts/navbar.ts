@@ -1,3 +1,5 @@
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { firebaseApp } from './firebase-setup';
 document
   .querySelector('#product-search-box')
   ?.addEventListener('keyup', async (e) => {
@@ -12,3 +14,48 @@ document
       window.location.assign(`/products`);
     }
   });
+
+function displayNavbar(query: string, display: boolean) {
+  const navbar = document.querySelector(query);
+  if (display) {
+    navbar?.classList.add('navbar-link-list');
+    navbar?.classList.remove('hidden');
+  } else {
+    navbar?.classList.add('hidden');
+    navbar?.classList.remove('navbar-link-list');
+  }
+}
+
+function changeNavbarMode(loggedIn: boolean) {
+  if (loggedIn) {
+    displayNavbar('#logged-in-navbar', true);
+    displayNavbar('#logged-out-navbar', false);
+  } else {
+    displayNavbar('#logged-out-navbar', true);
+    displayNavbar('#logged-in-navbar', false);
+  }
+}
+
+function setupLoggedInNavbar(userDisplayName: string | null) {
+  changeNavbarMode(true);
+  const currentUserNameElem = document.querySelector('#currentUserName');
+  if (currentUserNameElem) {
+    currentUserNameElem.textContent = userDisplayName;
+  }
+}
+
+function setupNonLoggedInNavbarUI() {
+  changeNavbarMode(false);
+  const currentUserNameElem = document.querySelector('#currentUserName');
+  if (currentUserNameElem) {
+    currentUserNameElem.textContent = '';
+  }
+}
+
+onAuthStateChanged(getAuth(firebaseApp), (user) => {
+  if (user) {
+    setupLoggedInNavbar(user.displayName);
+  } else {
+    setupNonLoggedInNavbarUI();
+  }
+});
