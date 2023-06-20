@@ -15,6 +15,11 @@ document
     }
   });
 
+document.querySelector('#sign-out-btn')?.addEventListener('click', async () => {
+  await getAuth(firebaseApp).signOut();
+  window.location.reload();
+});
+
 function displayNavbar(query: string, display: boolean) {
   const navbar = document.querySelector(query);
   if (display) {
