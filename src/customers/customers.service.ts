@@ -1,15 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
-import { CreateCustomerDto } from './create-customer.dto';
-import { UsersService } from '../users/users.service';
+import { CustomerDto as CustomerDto } from './customer.dto';
 import { Customer, UserType } from '@prisma/client';
+import { hashPassword } from 'src/utils/hash-password';
 
 @Injectable()
 export class CustomersService {
-  constructor(
-    private prismaService: PrismaService,
-    private usersService: UsersService,
-  ) {}
+  constructor(private prismaService: PrismaService) {}
 
   async getCustomers() {
     return await this.prismaService.customer.findMany({
@@ -19,25 +16,42 @@ export class CustomersService {
     });
   }
 
-  async createCustomer(newCustomer: CreateCustomerDto): Promise<Customer> {
-    const hashedPassword = await this.usersService.hashPassword(
-      newCustomer.password,
-    );
+  async createCustomer(customer: CustomerDto): Promise<Customer> {
+    const hashedPassword = await hashPassword(customer.password);
     return await this.prismaService.customer.create({
       data: {
         user: {
           create: {
-            name: newCustomer.name,
-            email: newCustomer.email,
-            phoneNumber: newCustomer.phoneNumber,
+            name: customer.name,
+            email: customer.email,
+            phoneNumber: customer.phoneNumber,
+            hashedPassword: hashedPassword,
             type: UserType.Customer,
+          },
+        },
+      },
+      include: { user: true },
+    });
+  }
+
+  async updateCustomer(
+    customerId: number,
+    customer: CustomerDto,
+  ): Promise<Customer> {
+    const hashedPassword = await hashPassword(customer.password);
+    return await this.prismaService.customer.update({
+      where: { id: customerId },
+      data: {
+        user: {
+          update: {
+            name: customer.name,
+            email: customer.email,
+            phoneNumber: customer.phoneNumber,
             hashedPassword: hashedPassword,
           },
         },
       },
-      include: {
-        user: true,
-      },
+      include: { user: true },
     });
   }
 }
