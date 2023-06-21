@@ -13,9 +13,9 @@ import { CustomersService } from './customers.service';
 import { Request } from 'express';
 import { AddNewCustomerDto } from './add-customer-info.dto';
 import { NewUserAuthGuard } from 'src/auth/new-user-auth.guard';
-import { Roles } from 'src/auth/roles.decorator';
+import { UserRoles } from 'src/auth/user-roles.decorator';
 
-@Roles()
+@UserRoles()
 @Controller('profile')
 export class CustomersController {
   constructor(private customersService: CustomersService) {}
@@ -46,9 +46,10 @@ export class CustomersController {
   @Post('edit')
   @Redirect('/profile')
   async update(@Req() req: Request, @Body() customerDto: UpdateCustomerDto) {
-    if (!req.user) {
+    const currentUser = req.user;
+    if (!currentUser) {
       throw new Error('No current user is provided');
     }
-    return this.customersService.updateCustomer(req.user.id, customerDto);
+    return this.customersService.updateCustomer(currentUser.id, customerDto);
   }
 }

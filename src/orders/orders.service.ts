@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Order, OrderStatus } from '@prisma/client';
 import { PrismaService } from 'nestjs-prisma';
 import { CartItemDto } from 'src/carts/cart-item.dto';
@@ -158,59 +162,67 @@ export class OrdersService {
 
   async cancelOrder(orderId: number): Promise<Order> {
     return await this.prisma.$transaction(async (client) => {
-      const order = await client.order.update({
+      const order = await client.order.findUnique({ where: { id: orderId } });
+
+      if (!order) {
+        throw new NotFoundException('Order not found');
+      }
+
+      if (order.status !== OrderStatus.Pending) {
+        throw new BadRequestException('Order is not pending');
+      }
+
+      return await client.order.update({
         where: { id: orderId },
         data: {
           status: OrderStatus.Canceled,
           finishedTime: new Date(),
         },
       });
-
-      if (order.status !== OrderStatus.Pending) {
-        throw new NotFoundException('Order is not pending');
-      }
-
-      return order;
     });
   }
 
   async cancelMyOrder(orderId: number, userId: string): Promise<Order> {
     return await this.prisma.$transaction(async (client) => {
-      const order = await client.order.update({
+      const order = await client.order.findUnique({ where: { id: orderId } });
+
+      if (!order || order.customerId !== userId) {
+        throw new NotFoundException('Order not found');
+      }
+
+      if (order.status !== OrderStatus.Pending) {
+        throw new BadRequestException('Order is not pending');
+      }
+
+      return await client.order.update({
         where: { id: orderId },
         data: {
           status: OrderStatus.Canceled,
           finishedTime: new Date(),
         },
       });
-
-      if (order.customerId !== userId) {
-        throw new NotFoundException('Order not found');
-      }
-
-      if (order.status !== OrderStatus.Pending) {
-        throw new NotFoundException('Order is not pending');
-      }
-
-      return order;
     });
   }
 
   async completeOrder(orderId: number): Promise<Order> {
     return await this.prisma.$transaction(async (client) => {
-      const order = await client.order.update({
+      const order = await client.order.findUnique({ where: { id: orderId } });
+
+      if (!order) {
+        throw new NotFoundException('Order not found');
+      }
+
+      if (order.status !== OrderStatus.Pending) {
+        throw new BadRequestException('Order is not pending');
+      }
+
+      return await client.order.update({
         where: { id: orderId },
         data: {
           status: OrderStatus.Completed,
           finishedTime: new Date(),
         },
       });
-
-      if (order.status !== OrderStatus.Pending) {
-        throw new NotFoundException('Order is not pending');
-      }
-
-      return order;
     });
   }
 }

@@ -10,17 +10,16 @@ import {
   Render,
   Req,
   Res,
-  UseGuards,
 } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { Request, Response } from 'express';
 import { OrderStatus, User } from '@prisma/client';
 import { PlaceOrderDto } from './place-order.dto';
-import { SessionAuthGuard } from 'src/auth/session-auth.guard';
 import { OrderStatusQuery } from './order-status.type';
+import { UserRoles } from 'src/auth/user-roles.decorator';
 
 @Controller('my-orders')
-@UseGuards(SessionAuthGuard)
+@UserRoles()
 export class MyOrdersController {
   constructor(private ordersService: OrdersService) {}
 
@@ -65,7 +64,7 @@ export class MyOrdersController {
     @Req() req: Request,
     @Res() res: Response,
   ) {
-    const currentUser = req.user as User;
+    const currentUser = req.user;
     if (!currentUser) {
       throw new Error('No current user is provided');
     }
@@ -82,7 +81,7 @@ export class MyOrdersController {
     @Param('id', ParseIntPipe) orderId: number,
     @Req() req: Request,
   ) {
-    const currentUser = req.user as User;
+    const currentUser = req.user;
     if (!currentUser) {
       throw new Error('No current user is provided');
     }

@@ -1,4 +1,4 @@
-export type EmployeeRole =
+export type UserRole =
   | 'manageOrders'
   | 'manageInventory'
   | 'manageCustomers';

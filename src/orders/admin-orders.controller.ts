@@ -7,16 +7,15 @@ import {
   Patch,
   Query,
   Render,
-  UseGuards,
 } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { OrderStatus } from '@prisma/client';
-import { SessionAuthGuard } from 'src/auth/session-auth.guard';
 import { OrderStatusQuery } from './order-status.type';
 import { OrderUpdateDto } from './update-order.dto';
+import { UserRoles } from 'src/auth/user-roles.decorator';
 
 @Controller('admin/orders')
-@UseGuards(SessionAuthGuard)
+@UserRoles('manageOrders')
 export class AdminOrdersController {
   constructor(private ordersService: OrdersService) {}
 

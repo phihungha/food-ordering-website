@@ -9,15 +9,14 @@ import {
   Redirect,
   Render,
   Req,
-  UseGuards,
 } from '@nestjs/common';
 import { MyCartService } from './my-cart.service';
 import { Request } from 'express';
-import { SessionAuthGuard } from 'src/auth/session-auth.guard';
 import { AddToCartDto } from './add-to-cart.dto';
+import { UserRoles } from 'src/auth/user-roles.decorator';
 
 @Controller('my-cart')
-@UseGuards(SessionAuthGuard)
+@UserRoles()
 export class MyCartController {
   constructor(private myCartService: MyCartService) {}
 

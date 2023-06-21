@@ -1,11 +1,11 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { EmployeeRole } from './roles.enum';
+import { UserRole } from './user-role.enum';
 import { Request } from 'express';
 import { UserWithRoleSpecificInfo } from 'src/users/users.service';
 
 function checkUserHasRole(
-  role: EmployeeRole,
+  role: UserRole,
   user: UserWithRoleSpecificInfo,
 ): boolean {
   const employee = user?.employee;
@@ -33,7 +33,7 @@ export class SessionAuthGuard implements CanActivate {
       return false;
     }
 
-    const requiredRoles = this.reflector.get<EmployeeRole[]>(
+    const requiredRoles = this.reflector.get<UserRole[]>(
       'roles',
       context.getHandler(),
     );
