@@ -1,13 +1,30 @@
 import { OrderStatus, PrismaClient, UserType } from '@prisma/client';
+import { initializeApp } from 'firebase-admin/app';
+import { applicationDefault } from 'firebase-admin/app';
+import { getAuth } from 'firebase-admin/auth';
 
 const prisma = new PrismaClient();
 
+async function createFirebaseUser(
+  name: string,
+  email: string,
+): Promise<string> {
+  const user = await getAuth().createUser({
+    email,
+    displayName: name,
+    password: '12345678',
+  });
+  return user.uid;
+}
+
 async function seedDb() {
+  initializeApp({ credential: applicationDefault() });
+
   const customer1 = await prisma.customer.create({
     data: {
       user: {
         create: {
-          id: '1',
+          id: await createFirebaseUser('Nguyễn Văn A', 'nguyenvana@gmail.com'),
           name: 'Nguyễn Văn A',
           email: 'nguyenvana@gmail.com',
           phoneNumber: '0123456780',
@@ -21,7 +38,7 @@ async function seedDb() {
     data: {
       user: {
         create: {
-          id: '2',
+          id: await createFirebaseUser('Nguyễn Văn B', 'nguyenvanb@gmail.com'),
           name: 'Nguyễn Văn B',
           email: 'nguyenvanb@gmail.com',
           phoneNumber: '0123456781',
@@ -35,7 +52,10 @@ async function seedDb() {
     data: {
       user: {
         create: {
-          id: '3',
+          id: await createFirebaseUser(
+            'Nguyễn Đơn Hàng',
+            'nguyendonhang@gmail.com',
+          ),
           name: 'Nguyễn Đơn Hàng',
           email: 'nguyendonhang@gmail.com',
           phoneNumber: '0123456782',
@@ -50,7 +70,10 @@ async function seedDb() {
     data: {
       user: {
         create: {
-          id: '4',
+          id: await createFirebaseUser(
+            'Nguyễn Hàng Hóa',
+            'nguyenhanghoa@gmail.com',
+          ),
           name: 'Nguyễn Hàng Hóa',
           email: 'nguyenhanghoa@gmail.com',
           phoneNumber: '0123456783',
@@ -65,7 +88,10 @@ async function seedDb() {
     data: {
       user: {
         create: {
-          id: '5',
+          id: await createFirebaseUser(
+            'Nguyễn Quản Lý',
+            'nguyenquanly@gmail.com',
+          ),
           name: 'Nguyễn Quản Lý',
           email: 'nguyenquanly@gmail.com',
           phoneNumber: '0123456784',

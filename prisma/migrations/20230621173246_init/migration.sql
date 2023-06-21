@@ -6,7 +6,7 @@ CREATE TYPE "OrderStatus" AS ENUM ('Pending', 'Completed', 'Canceled');
 
 -- CreateTable
 CREATE TABLE "User" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "phoneNumber" TEXT NOT NULL,
@@ -17,7 +17,7 @@ CREATE TABLE "User" (
 
 -- CreateTable
 CREATE TABLE "Employee" (
-    "id" INTEGER NOT NULL,
+    "id" TEXT NOT NULL,
     "manageOrders" BOOLEAN NOT NULL DEFAULT false,
     "manageInventory" BOOLEAN NOT NULL DEFAULT false,
     "manageCustomers" BOOLEAN NOT NULL DEFAULT false,
@@ -27,7 +27,7 @@ CREATE TABLE "Employee" (
 
 -- CreateTable
 CREATE TABLE "Customer" (
-    "id" INTEGER NOT NULL,
+    "id" TEXT NOT NULL,
 
     CONSTRAINT "Customer_pkey" PRIMARY KEY ("id")
 );
@@ -57,7 +57,7 @@ CREATE TABLE "ProductCategory" (
 
 -- CreateTable
 CREATE TABLE "CartItem" (
-    "customerId" INTEGER NOT NULL,
+    "customerId" TEXT NOT NULL,
     "productId" INTEGER NOT NULL,
     "quantity" INTEGER NOT NULL,
 
@@ -67,7 +67,7 @@ CREATE TABLE "CartItem" (
 -- CreateTable
 CREATE TABLE "Order" (
     "id" SERIAL NOT NULL,
-    "customerId" INTEGER NOT NULL,
+    "customerId" TEXT NOT NULL,
     "creationTime" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "finishedTime" TIMESTAMP(3),
     "deliveryAddress" TEXT NOT NULL,
