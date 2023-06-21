@@ -16,7 +16,7 @@ import { OrdersService } from './orders.service';
 import { Request, Response } from 'express';
 import { OrderStatus, User } from '@prisma/client';
 import { PlaceOrderDto } from './place-order.dto';
-import { SessionAuthGuard } from 'src/auth/session.guard';
+import { SessionAuthGuard } from 'src/auth/session-auth.guard';
 import { OrderStatusQuery } from './order-status.type';
 
 @Controller('my-orders')

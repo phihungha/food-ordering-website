@@ -12,7 +12,7 @@ import { UpdateCustomerDto } from './update-customer.dto';
 import { CustomersService } from './customers.service';
 import { Request } from 'express';
 import { AddNewCustomerDto } from './add-customer-info.dto';
-import { SessionAuthGuard } from 'src/auth/session.guard';
+import { SessionAuthGuard } from 'src/auth/session-auth.guard';
 
 @UseGuards(SessionAuthGuard)
 @Controller('profile')

@@ -4,7 +4,7 @@ import { UsersModule } from 'src/users/users.module';
 import { CustomerAuthController } from './customer-auth.controller';
 import { APP_GUARD } from '@nestjs/core';
 import { AdminAuthController } from './admin-auth.controller';
-import { SessionAuthGuard } from './session.guard';
+import { SessionAuthGuard } from './session-auth.guard';
 
 @Module({
   imports: [UsersModule],

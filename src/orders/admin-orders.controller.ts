@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { OrderStatus } from '@prisma/client';
-import { SessionAuthGuard } from 'src/auth/session.guard';
+import { SessionAuthGuard } from 'src/auth/session-auth.guard';
 import { OrderStatusQuery } from './order-status.type';
 import { OrderUpdateDto } from './update-order.dto';
 
