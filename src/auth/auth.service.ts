@@ -24,7 +24,7 @@ export class AuthService {
   }
 
   async verifySession(sessionCookie: string) {
-    const idToken = await getAuth().verifySessionCookie(sessionCookie, true);
+    const idToken = await getAuth().verifySessionCookie(sessionCookie, false);
     if (idToken.email) {
       return await this.usersService.getUserByEmail(idToken.email);
     }

@@ -1,12 +1,40 @@
-import { getAuth, EmailAuthProvider, GoogleAuthProvider } from 'firebase/auth';
+import {
+  getAuth,
+  EmailAuthProvider,
+  GoogleAuthProvider,
+  setPersistence,
+  inMemoryPersistence,
+} from 'firebase/auth';
 import { auth } from 'firebaseui';
 import { firebaseApp } from './firebase-setup';
 import 'firebaseui/dist/firebaseui.css';
 
-const loginUi = new auth.AuthUI(getAuth(firebaseApp));
+const authObj = getAuth(firebaseApp);
+setPersistence(authObj, inMemoryPersistence);
+
+async function setupSession(user: any) {
+  const idToken = await user.getIdToken();
+  const loginReqBody = { idToken };
+  await fetch('/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(loginReqBody),
+  });
+  await authObj.signOut();
+  window.location.assign('/');
+}
+
+const loginUi = new auth.AuthUI(authObj);
 const uiConfig = {
   callbacks: {
-    signInSuccessWithAuthResult: () => true,
+    signInSuccessWithAuthResult: (authResult: any) => {
+      setupSession(authResult.user);
+      const elem = document.getElementById('loading-state');
+      if (elem) {
+        elem.style.display = 'block';
+      }
+      return false;
+    },
     uiShown: function () {
       const elem = document.getElementById('loading-state');
       if (elem) {
@@ -15,7 +43,6 @@ const uiConfig = {
     },
   },
   signInFlow: 'popup',
-  signInSuccessUrl: '/',
   signInOptions: [
     EmailAuthProvider.PROVIDER_ID,
     GoogleAuthProvider.PROVIDER_ID,

@@ -7,45 +7,40 @@
     placeholder="Nhập tên sản phẩm cần tìm..."
     value="<%= locals?.searchTerm %>"
   />
-  <ul id="logged-out-navbar" class="navbar-link-list">
+  <ul class="navbar-link-list">
     <li>
       <a href="/products"
         ><span class="fa-icon material-symbols-outlined"> widgets </span></a
       >
     </li>
-    <li><a href="/login">Đăng nhập</a></li>
-  </ul>
-  <ul id="logged-in-navbar" class="hidden">
-    <li>
-      <a href="/products"
-        ><span class="fa-icon material-symbols-outlined"> widgets </span></a
-      >
-    </li>
-    <li>
-      <a href="/my-cart">
-        <span class="fa-icon material-symbols-outlined"> shopping_cart </span>
-      </a>
-    </li>
-    <li>
-      <a href="/my-orders"
-        ><span class="fa-icon material-symbols-outlined">
-          receipt_long
-        </span></a
-      >
-    </li>
-    <li>
-      <a href="/profile">
-        <p>Chào,</p>
-        <p id="currentUserName"></p>
-      </a>
-    </li>
-    <li>
-      <a href="">
-        <span id="sign-out-btn" class="fa-icon material-symbols-outlined">
-          logout
-        </span>
-      </a>
-    </li>
+
+    <% if (isSignedIn) { %>
+      <li>
+        <a href="/my-cart">
+          <span class="fa-icon material-symbols-outlined"> shopping_cart </span>
+        </a>
+      </li>
+      <li>
+        <a href="/my-orders"
+          ><span class="fa-icon material-symbols-outlined">
+            receipt_long
+          </span></a
+        >
+      </li>
+      <li>
+        <a href="/profile">
+          <p>Chào,</p>
+          <p><%= currentUser.name %></p>
+        </a>
+      </li>
+      <li>
+        <a href="/logout"
+          ><span class="fa-icon material-symbols-outlined"> logout </span></a
+        >
+      </li>
+    <% } else { %>
+      <li><a href="/login">Đăng nhập</a></li>
+    <% } %>
   </ul>
 
   <script src="/scripts/navbar.js"></script>

@@ -36,7 +36,6 @@ export class CustomerAuthController {
     res.cookie('session', sessionCookie, {
       httpOnly: true,
       maxAge: expiresIn,
-      secure: true,
     });
   }
 
