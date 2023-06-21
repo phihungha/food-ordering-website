@@ -1,43 +1,34 @@
-import { Injectable } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import { User } from '@prisma/client';
-import * as bcrypt from 'bcrypt';
-import { JwtPayload } from './jwt-payload.model';
+import { getAuth } from 'firebase-admin/auth';
+import { ConfigService } from '@nestjs/config';
+import { calcSessionExpireSeconds } from './utils';
 
 @Injectable()
 export class AuthService {
   constructor(
     private usersService: UsersService,
-    private jwtService: JwtService,
+    private configService: ConfigService,
   ) {}
 
-  async validateUser(email: string, password: string): Promise<User | null> {
-    const user = await this.usersService.getUserByEmail(email);
-    if (user) {
-      const isPasswordCorrect = await bcrypt.compare(
-        password,
-        user.hashedPassword,
-      );
-      if (isPasswordCorrect) {
-        return user;
-      }
+  async createSession(idToken: string): Promise<string> {
+    const expireHours =
+      this.configService.get<number>('SESSION_EXPIRE_HOUR') ?? 24 * 5;
+    const expiresIn = calcSessionExpireSeconds(expireHours);
+    const sessionOptions = { expiresIn };
+    try {
+      return await getAuth().createSessionCookie(idToken, sessionOptions);
+    } catch (err) {
+      throw new ForbiddenException();
+    }
+  }
+
+  async verifySession(sessionCookie: string): Promise<User | null> {
+    const idToken = await getAuth().verifySessionCookie(sessionCookie, true);
+    if (idToken.email) {
+      return await this.usersService.getUserByEmail(idToken.email);
     }
     return null;
-  }
-
-  async generateJwt(user: User): Promise<string> {
-    const payload = { email: user.email, sub: user.id };
-    return await this.jwtService.signAsync(payload);
-  }
-
-  async verifyJwt(jwt: string): Promise<User | null> {
-    try {
-      const payload = await this.jwtService.verifyAsync(jwt);
-      const userId = +(payload as JwtPayload).sub;
-      return await this.usersService.getUserById(userId);
-    } catch (err) {
-      return null;
-    }
   }
 }

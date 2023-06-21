@@ -2,9 +2,6 @@
 CREATE TYPE "UserType" AS ENUM ('Customer', 'Employee');
 
 -- CreateEnum
-CREATE TYPE "EmployeeType" AS ENUM ('OrderManager', 'InventoryManager', 'SalesManager');
-
--- CreateEnum
 CREATE TYPE "OrderStatus" AS ENUM ('Pending', 'Completed', 'Canceled');
 
 -- CreateTable
@@ -14,7 +11,6 @@ CREATE TABLE "User" (
     "email" TEXT NOT NULL,
     "phoneNumber" TEXT NOT NULL,
     "type" "UserType" NOT NULL,
-    "hashedPassword" TEXT NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -22,7 +18,9 @@ CREATE TABLE "User" (
 -- CreateTable
 CREATE TABLE "Employee" (
     "id" INTEGER NOT NULL,
-    "type" "EmployeeType" NOT NULL,
+    "manageOrders" BOOLEAN NOT NULL DEFAULT false,
+    "manageInventory" BOOLEAN NOT NULL DEFAULT false,
+    "manageCustomers" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "Employee_pkey" PRIMARY KEY ("id")
 );

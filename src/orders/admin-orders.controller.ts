@@ -11,12 +11,12 @@ import {
 } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { OrderStatus } from '@prisma/client';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { SessionGuard } from 'src/auth/session.guard';
 import { OrderStatusQuery } from './order-status.type';
 import { OrderUpdateDto } from './update-order.dto';
 
 @Controller('admin/orders')
-@UseGuards(JwtAuthGuard)
+@UseGuards(SessionGuard)
 export class AdminOrdersController {
   constructor(private ordersService: OrdersService) {}
 

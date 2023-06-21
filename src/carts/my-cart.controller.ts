@@ -13,12 +13,12 @@ import {
 } from '@nestjs/common';
 import { MyCartService } from './my-cart.service';
 import { Request } from 'express';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { SessionGuard } from 'src/auth/session.guard';
 import { AddToCartDto } from './add-to-cart.dto';
 import { User } from '@prisma/client';
 
 @Controller('my-cart')
-@UseGuards(JwtAuthGuard)
+@UseGuards(SessionGuard)
 export class MyCartController {
   constructor(private myCartService: MyCartService) {}
 

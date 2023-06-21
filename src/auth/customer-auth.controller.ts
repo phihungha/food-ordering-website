@@ -1,40 +1,48 @@
 import {
+  Body,
   Controller,
   Get,
   Post,
-  Query,
   Redirect,
   Render,
-  Req,
   Res,
-  UseGuards,
 } from '@nestjs/common';
-import { Request, Response } from 'express';
-import { LocalAuthGuard } from './local-auth.guard';
+import { Response } from 'express';
 import { AuthService } from './auth.service';
-import { User } from '@prisma/client';
+import { ConfigService } from '@nestjs/config';
+import { LoginPayload } from './login-payload.model';
+import { calcSessionExpireSeconds } from './utils';
 
 @Controller()
 export class CustomerAuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private configService: ConfigService,
+  ) {}
 
   @Get('login')
   @Render('login')
-  async getLoginPage(@Query('signupSucceed') signupSucceed: boolean) {
-    return { title: 'Đăng nhập ABC', signupSucceed };
+  async getLoginPage() {
+    return { title: 'Đăng nhập ABC' };
   }
 
-  @UseGuards(LocalAuthGuard)
   @Post('login')
   @Redirect('/')
-  async login(@Req() req: Request, @Res() res: Response) {
-    const jwt = await this.authService.generateJwt(req.user as User);
-    res.cookie('jwt', jwt, { httpOnly: true });
+  async login(@Body() body: LoginPayload, @Res() res: Response) {
+    const sessionCookie = await this.authService.createSession(body.idToken);
+    const expireHours =
+      this.configService.get<number>('SESSION_EXPIRE_HOUR') ?? 24 * 5;
+    const expiresIn = calcSessionExpireSeconds(expireHours);
+    res.cookie('session', sessionCookie, {
+      httpOnly: true,
+      maxAge: expiresIn,
+      secure: true,
+    });
   }
 
   @Get('logout')
   @Redirect('/')
   async logout(@Res() res: Response) {
-    res.cookie('jwt', '', { maxAge: 1 });
+    res.clearCookie('session');
   }
 }

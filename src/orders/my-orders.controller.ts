@@ -16,11 +16,11 @@ import { OrdersService } from './orders.service';
 import { Request, Response } from 'express';
 import { OrderStatus, User } from '@prisma/client';
 import { PlaceOrderDto } from './place-order.dto';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { SessionGuard } from 'src/auth/session.guard';
 import { OrderStatusQuery } from './order-status.type';
 
 @Controller('my-orders')
-@UseGuards(JwtAuthGuard)
+@UseGuards(SessionGuard)
 export class MyOrdersController {
   constructor(private ordersService: OrdersService) {}
 

@@ -1,26 +1,17 @@
-import * as bcrypt from 'bcrypt';
-import {
-  EmployeeType,
-  OrderStatus,
-  PrismaClient,
-  UserType,
-} from '@prisma/client';
+import { OrderStatus, PrismaClient, UserType } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
 async function seedDb() {
-  const salt = await bcrypt.genSalt();
-  const password = await bcrypt.hash('12345678', salt);
-
   const customer1 = await prisma.customer.create({
     data: {
       user: {
         create: {
+          id: '1',
           name: 'Nguyễn Văn A',
           email: 'nguyenvana@gmail.com',
           phoneNumber: '0123456780',
           type: UserType.Customer,
-          hashedPassword: password,
         },
       },
     },
@@ -30,11 +21,11 @@ async function seedDb() {
     data: {
       user: {
         create: {
+          id: '2',
           name: 'Nguyễn Văn B',
           email: 'nguyenvanb@gmail.com',
           phoneNumber: '0123456781',
           type: UserType.Customer,
-          hashedPassword: password,
         },
       },
     },
@@ -44,14 +35,14 @@ async function seedDb() {
     data: {
       user: {
         create: {
+          id: '3',
           name: 'Nguyễn Đơn Hàng',
           email: 'nguyendonhang@gmail.com',
           phoneNumber: '0123456782',
           type: UserType.Employee,
-          hashedPassword: password,
         },
       },
-      type: EmployeeType.OrderManager,
+      manageOrders: true,
     },
   });
 
@@ -59,14 +50,31 @@ async function seedDb() {
     data: {
       user: {
         create: {
+          id: '4',
           name: 'Nguyễn Hàng Hóa',
           email: 'nguyenhanghoa@gmail.com',
           phoneNumber: '0123456783',
           type: UserType.Employee,
-          hashedPassword: password,
         },
       },
-      type: EmployeeType.InventoryManager,
+      manageInventory: true,
+    },
+  });
+
+  await prisma.employee.create({
+    data: {
+      user: {
+        create: {
+          id: '5',
+          name: 'Nguyễn Quản Lý',
+          email: 'nguyenquanly@gmail.com',
+          phoneNumber: '0123456784',
+          type: UserType.Employee,
+        },
+      },
+      manageOrders: true,
+      manageInventory: true,
+      manageCustomers: true,
     },
   });
 
