@@ -15,47 +15,33 @@ export class ProductsService {
           mode: 'insensitive',
         },
       },
-      include: {
-        category: true,
-      },
+      include: { category: true },
     });
   }
 
   async getPopularProducts(): Promise<Product[]> {
     return await this.prisma.product.findMany({
-      include: {
-        category: true,
-      },
-      orderBy: {
-        buyCount: 'desc',
-      },
+      include: { category: true },
+      orderBy: { buyCount: 'desc' },
       take: 20,
     });
   }
 
   async getRecentProducts(): Promise<Product[]> {
     return await this.prisma.product.findMany({
-      include: {
-        category: true,
-      },
-      orderBy: {
-        additionDate: 'desc',
-      },
+      include: { category: true },
+      orderBy: { additionDate: 'desc' },
       take: 20,
     });
   }
 
-  async getProductById(id: number, customerId?: number) {
+  async getProductById(id: number, customerId?: string) {
     const product = await this.prisma.product.findUnique({
-      where: {
-        id,
-      },
+      where: { id },
       include: {
         category: true,
         carts: {
-          where: {
-            customerId,
-          },
+          where: { customerId },
         },
       },
     });
@@ -71,20 +57,13 @@ export class ProductsService {
       cartQuantity = 1;
     }
 
-    return {
-      product,
-      cartQuantity,
-    };
+    return { product, cartQuantity };
   }
 
   async updateProductsBuyCount(products: number[]) {
     return this.prisma.product.updateMany({
-      where: {
-        id: { in: products },
-      },
-      data: {
-        buyCount: { increment: 1 },
-      },
+      where: { id: { in: products } },
+      data: { buyCount: { increment: 1 } },
     });
   }
 

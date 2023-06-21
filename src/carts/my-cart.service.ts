@@ -7,11 +7,9 @@ import { CartItem, Prisma } from '@prisma/client';
 export class MyCartService {
   constructor(private prisma: PrismaService) {}
 
-  async getCart(customerId: number): Promise<CartItemInfoDto> {
+  async getCart(customerId: string): Promise<CartItemInfoDto> {
     const cartItems = await this.prisma.cartItem.findMany({
-      where: {
-        customerId,
-      },
+      where: { customerId },
       include: {
         product: true,
       },
@@ -29,7 +27,7 @@ export class MyCartService {
 
   async addToCart(
     productId: number,
-    customerId: number,
+    customerId: string,
     quantity: number,
   ): Promise<CartItem> {
     return await this.prisma.cartItem.upsert({
@@ -51,7 +49,7 @@ export class MyCartService {
   }
 
   async removeFromCart(
-    customerId: number,
+    customerId: string,
     productId: number,
   ): Promise<CartItem> {
     return await this.prisma.cartItem.delete({
@@ -61,11 +59,9 @@ export class MyCartService {
     });
   }
 
-  async clearCart(customerId: number) {
+  async clearCart(customerId: string) {
     return await this.prisma.cartItem.deleteMany({
-      where: {
-        customerId,
-      },
+      where: { customerId },
     });
   }
 }

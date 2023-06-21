@@ -1,6 +1,6 @@
 import { IsEmail, IsNotEmpty, IsPhoneNumber } from 'class-validator';
 
-export class CustomerDto {
+export class UpdateCustomerDto {
   @IsNotEmpty()
   name: string;
 

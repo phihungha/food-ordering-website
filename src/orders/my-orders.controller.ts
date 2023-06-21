@@ -30,7 +30,10 @@ export class MyOrdersController {
     @Query('status') statusFilter: OrderStatusQuery,
     @Req() req: Request,
   ) {
-    const currentUser = req.user as User;
+    const currentUser = req.user;
+    if (!currentUser) {
+      throw new Error('No current user is provided');
+    }
     const orders = await this.ordersService.getMyOrders(
       currentUser.id,
       statusFilter,
@@ -41,7 +44,10 @@ export class MyOrdersController {
   @Get(':id')
   @Render('order-details')
   async getOrderDetails(@Param('id') orderId: number, @Req() req: Request) {
-    const currentUser = req.user as User;
+    const currentUser = req.user;
+    if (!currentUser) {
+      throw new Error('No current user is provided');
+    }
     const order = await this.ordersService.getMyOrderDetails(
       orderId,
       currentUser.id,
@@ -60,6 +66,9 @@ export class MyOrdersController {
     @Res() res: Response,
   ) {
     const currentUser = req.user as User;
+    if (!currentUser) {
+      throw new Error('No current user is provided');
+    }
     const order = await this.ordersService.placeOrder(
       body.deliveryAddress,
       currentUser.id,
@@ -74,6 +83,9 @@ export class MyOrdersController {
     @Req() req: Request,
   ) {
     const currentUser = req.user as User;
+    if (!currentUser) {
+      throw new Error('No current user is provided');
+    }
     return await this.ordersService.cancelMyOrder(orderId, currentUser.id);
   }
 }

@@ -2,14 +2,19 @@ import {
   Body,
   Controller,
   Get,
-  Param,
   Patch,
   Post,
   Render,
+  Req,
+  UseGuards,
 } from '@nestjs/common';
-import { CustomerDto } from './customer.dto';
+import { UpdateCustomerDto } from './update-customer.dto';
 import { CustomersService } from './customers.service';
+import { Request } from 'express';
+import { AddNewCustomerDto } from './add-customer-info.dto';
+import { SessionGuard } from 'src/auth/session.guard';
 
+@UseGuards(SessionGuard)
 @Controller('profile')
 export class CustomersController {
   constructor(private customersService: CustomersService) {}
@@ -21,12 +26,18 @@ export class CustomersController {
   }
 
   @Post()
-  async signUp(@Body() customerDto: CustomerDto) {
-    return this.customersService.createCustomer(customerDto);
+  async addNew(@Req() req: Request, @Body() customerDto: AddNewCustomerDto) {
+    if (!req.firebaseUid) {
+      throw new Error('No Firebase user UID is provided');
+    }
+    return this.customersService.addCustomerInfo(req.firebaseUid, customerDto);
   }
 
-  @Patch(':id')
-  async update(@Param('id') orderId: number, @Body() customerDto: CustomerDto) {
-    return this.customersService.updateCustomer(orderId, customerDto);
+  @Patch()
+  async update(@Req() req: Request, @Body() customerDto: UpdateCustomerDto) {
+    if (!req.user) {
+      throw new Error('No current user is provided');
+    }
+    return this.customersService.updateCustomer(req.user.id, customerDto);
   }
 }

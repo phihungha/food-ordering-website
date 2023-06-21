@@ -13,7 +13,7 @@ export class OrdersService {
   ) {}
 
   async getMyOrders(
-    customerId: number,
+    customerId: string,
     statusFilter: OrderStatusQuery,
   ): Promise<Order[]> {
     let orderStatusFilter;
@@ -89,7 +89,7 @@ export class OrdersService {
     return order;
   }
 
-  async getMyOrderDetails(orderId: number, userId: number): Promise<Order> {
+  async getMyOrderDetails(orderId: number, userId: string): Promise<Order> {
     const order = await this.prisma.order.findUnique({
       where: { id: orderId },
       include: {
@@ -123,7 +123,7 @@ export class OrdersService {
 
   async placeOrder(
     deliveryAddress: string,
-    customerId: number,
+    customerId: string,
   ): Promise<Order> {
     const cart = await this.myCartService.getCart(customerId);
     const orderItems = this.generateOrderItems(cart.cartItems);
@@ -174,7 +174,7 @@ export class OrdersService {
     });
   }
 
-  async cancelMyOrder(orderId: number, userId: number): Promise<Order> {
+  async cancelMyOrder(orderId: number, userId: string): Promise<Order> {
     return await this.prisma.$transaction(async (client) => {
       const order = await client.order.update({
         where: { id: orderId },
