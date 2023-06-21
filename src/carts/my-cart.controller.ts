@@ -13,11 +13,11 @@ import {
 } from '@nestjs/common';
 import { MyCartService } from './my-cart.service';
 import { Request } from 'express';
-import { SessionGuard } from 'src/auth/session.guard';
+import { SessionAuthGuard } from 'src/auth/session.guard';
 import { AddToCartDto } from './add-to-cart.dto';
 
 @Controller('my-cart')
-@UseGuards(SessionGuard)
+@UseGuards(SessionAuthGuard)
 export class MyCartController {
   constructor(private myCartService: MyCartService) {}
 

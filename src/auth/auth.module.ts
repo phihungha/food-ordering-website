@@ -4,7 +4,7 @@ import { UsersModule } from 'src/users/users.module';
 import { CustomerAuthController } from './customer-auth.controller';
 import { APP_GUARD } from '@nestjs/core';
 import { AdminAuthController } from './admin-auth.controller';
-import { SessionGuard } from './session.guard';
+import { SessionAuthGuard } from './session.guard';
 
 @Module({
   imports: [UsersModule],
@@ -12,7 +12,7 @@ import { SessionGuard } from './session.guard';
     AuthService,
     {
       provide: APP_GUARD,
-      useClass: SessionGuard,
+      useClass: SessionAuthGuard,
     },
   ],
   controllers: [CustomerAuthController, AdminAuthController],
