@@ -3,8 +3,8 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
-import * as cookieParser from 'cookie-parser';
-import { initializeApp } from 'firebase-admin';
+import cookieParser from 'cookie-parser';
+import { initializeApp } from 'firebase-admin/app';
 import { applicationDefault } from 'firebase-admin/app';
 
 async function bootstrap() {
