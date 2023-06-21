@@ -7,29 +7,40 @@
     <div class="main-container center-container">
       <h1 class="title">Thông tin của tôi</h1>
       <form
-        action="/signup"
+        action="/profile/edit"
         method="post"
         class="vertical-container auth-field-container"
       >
-        <input placeholder="Name..." required type="text" name="name" />
-        <input placeholder="Email..." required type="email" name="email" />
+        <input
+          placeholder="Name..."
+          required
+          type="text"
+          name="name"
+          value="<%= currentUser.name %>"
+        />
+        <input
+          placeholder="Email..."
+          required
+          type="email"
+          name="email"
+          value="<%= currentUser.email %>"
+        />
         <input
           placeholder="Số điện thoại..."
           required
           type="tel"
           pattern="0\d{9}"
           name="phoneNumber"
+          value="<%= currentUser.phoneNumber %>"
         />
         <input
           placeholder="Mật khẩu..."
-          required
           minlength="8"
           type="password"
           name="password"
         />
         <input
           placeholder="Nhập lại mật khẩu..."
-          required
           minlength="8"
           type="password"
         />

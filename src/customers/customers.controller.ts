@@ -2,8 +2,8 @@ import {
   Body,
   Controller,
   Get,
-  Patch,
   Post,
+  Redirect,
   Render,
   Req,
   UseGuards,
@@ -12,9 +12,10 @@ import { UpdateCustomerDto } from './update-customer.dto';
 import { CustomersService } from './customers.service';
 import { Request } from 'express';
 import { AddNewCustomerDto } from './add-customer-info.dto';
-import { SessionAuthGuard } from 'src/auth/session-auth.guard';
+import { NewUserAuthGuard } from 'src/auth/new-user-auth.guard';
+import { Roles } from 'src/auth/roles.decorator';
 
-@UseGuards(SessionAuthGuard)
+@Roles()
 @Controller('profile')
 export class CustomersController {
   constructor(private customersService: CustomersService) {}
@@ -25,13 +26,16 @@ export class CustomersController {
     return { title: 'Thông tin của tôi' };
   }
 
+  @UseGuards(NewUserAuthGuard)
   @Get('setup')
   @Render('profile-setup')
   profileSetupPage() {
     return { title: 'Thiết lập thêm thông tin' };
   }
 
-  @Post()
+  @UseGuards(NewUserAuthGuard)
+  @Post('setup')
+  @Redirect('/')
   async addNew(@Req() req: Request, @Body() customerDto: AddNewCustomerDto) {
     if (!req.firebaseUid) {
       throw new Error('No Firebase user UID is provided');
@@ -39,7 +43,8 @@ export class CustomersController {
     return this.customersService.addCustomerInfo(req.firebaseUid, customerDto);
   }
 
-  @Patch()
+  @Post('edit')
+  @Redirect('/profile')
   async update(@Req() req: Request, @Body() customerDto: UpdateCustomerDto) {
     if (!req.user) {
       throw new Error('No current user is provided');

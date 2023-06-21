@@ -59,7 +59,7 @@ export class CustomersService {
     const firebaseUser = await getAuth().updateUser(customerId, {
       displayName: customer.name,
       email: customer.email,
-      password: customer.password,
+      password: customer.password ? customer.password : undefined,
     });
 
     return await this.prismaService.customer.update({

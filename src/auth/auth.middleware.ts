@@ -17,17 +17,19 @@ export class AuthMiddleware implements NestMiddleware {
     }
 
     const firebaseUid = await this.authService.verifySession(sessionCookie);
+    req.firebaseUid = firebaseUid;
+
     const currentUser = await this.usersService.getUserById(firebaseUid);
     if (currentUser) {
       req.user = currentUser;
-    }
-    if (firebaseUid && !currentUser) {
+    } else {
       req.firebaseUid = firebaseUid;
       if (req.originalUrl !== '/profile/setup') {
         res.redirect('/profile/setup');
         return;
       }
     }
+
     next();
   }
 }

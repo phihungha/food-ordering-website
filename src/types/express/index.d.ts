@@ -1,4 +1,3 @@
-import { User } from '@prisma/client';
 import { UserWithRoleSpecificInfo } from 'src/users/users.service';
 
 declare global {
