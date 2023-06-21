@@ -1,33 +1,37 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-import { AuthService } from './auth.service';
 import { Reflector } from '@nestjs/core';
 import { EmployeeRole } from './roles.enum';
+import { Request } from 'express';
+import { UserWithRoleSpecificInfo } from 'src/users/users.service';
 
-function checkUserHasRole(role: EmployeeRole, employee: any): boolean {
+function checkUserHasRole(
+  role: EmployeeRole,
+  user: UserWithRoleSpecificInfo,
+): boolean {
+  const employee = user?.employee;
   if (role === 'manageOrders') {
-    return employee.manageOrders ? true : false;
+    return employee?.manageOrders ? true : false;
   }
   if (role === 'manageInventory') {
-    return employee.manageInventory ? true : false;
+    return employee?.manageInventory ? true : false;
   }
   if (role === 'manageCustomers') {
-    return employee.manageCustomers ? true : false;
+    return employee?.manageCustomers ? true : false;
   }
   return false;
 }
 
 @Injectable()
 export class SessionAuthGuard implements CanActivate {
-  constructor(private authService: AuthService, private reflector: Reflector) {}
+  constructor(private reflector: Reflector) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const req = context.switchToHttp().getRequest();
-    const user = await this.authService.verifySession(req.cookies.session);
+    const req = context.switchToHttp().getRequest() as Request;
+    const user = req.user;
 
-    if (user === null) {
+    if (!user) {
       return false;
     }
-    req.user = user;
 
     const requiredRoles = this.reflector.get<EmployeeRole[]>(
       'roles',
@@ -42,7 +46,7 @@ export class SessionAuthGuard implements CanActivate {
     // Check employee role
     return (
       user.employee !== null &&
-      requiredRoles.every((i) => checkUserHasRole(i, user.employee))
+      requiredRoles.every((i) => checkUserHasRole(i, user))
     );
   }
 }

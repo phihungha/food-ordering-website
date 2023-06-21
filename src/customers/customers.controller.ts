@@ -25,6 +25,12 @@ export class CustomersController {
     return { title: 'Thông tin của tôi' };
   }
 
+  @Get('setup')
+  @Render('profile-setup')
+  profileSetupPage() {
+    return { title: 'Thiết lập thêm thông tin' };
+  }
+
   @Post()
   async addNew(@Req() req: Request, @Body() customerDto: AddNewCustomerDto) {
     if (!req.firebaseUid) {
