@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
-import { EmployeesModule } from './employees/employees.module';
 import { MyCartModule } from './carts/my-cart.module';
 import { CustomersModule } from './customers/customers.module';
 import { OrdersModule } from './orders/orders.module';
@@ -25,7 +24,6 @@ import { FormatterInterceptor } from './formatter.interceptor';
     OrdersModule,
     UsersModule,
     CustomersModule,
-    EmployeesModule,
     MyCartModule,
   ],
   providers: [
