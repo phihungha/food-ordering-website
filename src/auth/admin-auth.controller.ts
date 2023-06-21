@@ -3,28 +3,36 @@ import {
   Controller,
   Get,
   Post,
-  Query,
   Redirect,
   Render,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { AuthService } from './auth.service';
 import { calcSessionExpireSeconds } from './utils';
 import { ConfigService } from '@nestjs/config';
 import { LoginPayload } from './login-payload.model';
+import { EmployeeAuthGuard } from './employee-auth.guard';
 
-@Controller('/admin')
+@Controller('admin')
+@UseGuards(EmployeeAuthGuard)
 export class AdminAuthController {
   constructor(
     private authService: AuthService,
     private configService: ConfigService,
   ) {}
 
+  @Get('/')
+  @Render('admin/homepage')
+  async getHomePage() {
+    return { title: 'Bảng Admin' };
+  }
+
   @Get('login')
   @Render('admin/login')
-  async getLoginPage(@Query('signupSucceed') signupSucceed: boolean) {
-    return { title: 'Đăng nhập ABC', signupSucceed };
+  async getLoginPage() {
+    return { title: 'Đăng nhập admin ABC' };
   }
 
   @Post('login')

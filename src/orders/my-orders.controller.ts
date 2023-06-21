@@ -10,16 +10,17 @@ import {
   Render,
   Req,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { Request, Response } from 'express';
-import { OrderStatus, User } from '@prisma/client';
+import { OrderStatus } from '@prisma/client';
 import { PlaceOrderDto } from './place-order.dto';
 import { OrderStatusQuery } from './order-status.type';
-import { UserRoles } from 'src/auth/user-roles.decorator';
+import { CustomerAuthGuard } from 'src/auth/customer-auth.guard';
 
 @Controller('my-orders')
-@UserRoles()
+@UseGuards(CustomerAuthGuard)
 export class MyOrdersController {
   constructor(private ordersService: OrdersService) {}
 

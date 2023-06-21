@@ -1,11 +1,12 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { UserRole } from './user-role.enum';
+import { EmployeeRole } from './employee-role.enum';
 import { Request } from 'express';
 import { UserWithRoleSpecificInfo } from 'src/users/users.service';
+import { UserType } from '@prisma/client';
 
 function checkUserHasRole(
-  role: UserRole,
+  role: EmployeeRole,
   user: UserWithRoleSpecificInfo,
 ): boolean {
   const employee = user?.employee;
@@ -22,7 +23,7 @@ function checkUserHasRole(
 }
 
 @Injectable()
-export class SessionAuthGuard implements CanActivate {
+export class EmployeeAuthGuard implements CanActivate {
   constructor(private reflector: Reflector) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -33,14 +34,14 @@ export class SessionAuthGuard implements CanActivate {
       return false;
     }
 
-    const requiredRoles = this.reflector.get<UserRole[]>(
+    const requiredRoles = this.reflector.get<EmployeeRole[]>(
       'roles',
       context.getHandler(),
     );
 
-    // Check is customer
+    // Check is employee
     if (!requiredRoles || requiredRoles.length === 0) {
-      return user.customer !== null;
+      return user.type === UserType.Employee;
     }
 
     // Check employee role

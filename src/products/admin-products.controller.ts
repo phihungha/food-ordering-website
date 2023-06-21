@@ -11,10 +11,10 @@ import {
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { ProductDto } from './product.dto';
-import { UserRoles } from 'src/auth/user-roles.decorator';
+import { EmployeeRoles } from 'src/auth/employee-roles.decorator';
 
 @Controller('admin/products')
-@UserRoles('manageInventory')
+@EmployeeRoles('manageInventory')
 export class AdminProductsController {
   constructor(private productsService: ProductsService) {}
 

@@ -12,10 +12,10 @@ import { OrdersService } from './orders.service';
 import { OrderStatus } from '@prisma/client';
 import { OrderStatusQuery } from './order-status.type';
 import { OrderUpdateDto } from './update-order.dto';
-import { UserRoles } from 'src/auth/user-roles.decorator';
+import { EmployeeRoles } from 'src/auth/employee-roles.decorator';
 
 @Controller('admin/orders')
-@UserRoles('manageOrders')
+@EmployeeRoles('manageOrders')
 export class AdminOrdersController {
   constructor(private ordersService: OrdersService) {}
 
