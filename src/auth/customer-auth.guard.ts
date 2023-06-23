@@ -4,8 +4,6 @@ import { Request } from 'express';
 
 @Injectable()
 export class CustomerAuthGuard implements CanActivate {
-  constructor() {}
-
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const req = context.switchToHttp().getRequest() as Request;
     const user = req.user;
