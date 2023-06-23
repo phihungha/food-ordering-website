@@ -11,7 +11,7 @@ datasource db {
 }
 
 model User {
-  id          Int    @id @default(autoincrement())
+  id          String @id
   name        String
   email       String @unique
   phoneNumber String @unique
@@ -19,8 +19,6 @@ model User {
   type     UserType
   customer Customer?
   employee Employee?
-
-  hashedPassword String
 }
 
 enum UserType {
@@ -29,19 +27,15 @@ enum UserType {
 }
 
 model Employee {
-  id   Int          @id
-  user User         @relation(fields: [id], references: [id])
-  type EmployeeType
-}
-
-enum EmployeeType {
-  OrderManager
-  InventoryManager
-  SalesManager
+  id              String  @id
+  user            User    @relation(fields: [id], references: [id])
+  manageOrders    Boolean @default(false)
+  manageInventory Boolean @default(false)
+  manageCustomers Boolean @default(false)
 }
 
 model Customer {
-  id        Int        @id
+  id        String     @id
   user      User       @relation(fields: [id], references: [id])
   orders    Order[]
   cartItems CartItem[]
@@ -50,6 +44,8 @@ model Customer {
 model Product {
   id           Int             @id @default(autoincrement())
   name         String          @unique
+  imageUrl     String
+  description  String
   category     ProductCategory @relation(fields: [categoryId], references: [id])
   categoryId   Int
   price        Decimal         @db.Money
@@ -68,7 +64,7 @@ model ProductCategory {
 
 model CartItem {
   customer   Customer @relation(fields: [customerId], references: [id])
-  customerId Int
+  customerId String
   product    Product  @relation(fields: [productId], references: [id])
   productId  Int
   quantity   Int
@@ -79,7 +75,7 @@ model CartItem {
 model Order {
   id              Int         @id @default(autoincrement())
   customer        Customer    @relation(fields: [customerId], references: [id])
-  customerId      Int
+  customerId      String
   creationTime    DateTime    @default(now())
   finishedTime    DateTime?
   deliveryAddress String

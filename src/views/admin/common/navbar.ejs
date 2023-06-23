@@ -1,0 +1,22 @@
+<div class="navbar admin-navbar">
+  <a href="/admin" class="logo-container"><img src="/images/logo.svg" /></a>
+  <ul class="navbar-link-list admin-navbar-link-list">
+    <% if (isSignedIn) { %>
+      <% if (currentUser.employee.manageInventory) { %>
+        <li>
+          <a href="/admin/products">Kho</a>
+        </li>
+      <% } %>
+      <% if (currentUser.employee.manageOrders) { %>
+        <li>
+          <a href="/admin/orders">Đơn hàng</a>
+        </li>
+      <% } %>
+      <li>
+        <a href="/admin/logout">Đăng xuất</a>
+      </li>
+    <% } else { %>
+      <li><a href="/admin/login">Đăng nhập</a></li>
+    <% } %>
+  </ul>
+</div>

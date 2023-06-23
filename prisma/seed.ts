@@ -1,26 +1,34 @@
-import * as bcrypt from 'bcrypt';
-import {
-  EmployeeType,
-  OrderStatus,
-  PrismaClient,
-  UserType,
-} from '@prisma/client';
+import { OrderStatus, PrismaClient, UserType } from '@prisma/client';
+import { initializeApp } from 'firebase-admin/app';
+import { applicationDefault } from 'firebase-admin/app';
+import { getAuth } from 'firebase-admin/auth';
 
 const prisma = new PrismaClient();
 
+async function createFirebaseUser(
+  name: string,
+  email: string,
+): Promise<string> {
+  const user = await getAuth().createUser({
+    email,
+    displayName: name,
+    password: '12345678',
+  });
+  return user.uid;
+}
+
 async function seedDb() {
-  const salt = await bcrypt.genSalt();
-  const password = await bcrypt.hash('12345678', salt);
+  initializeApp({ credential: applicationDefault() });
 
   const customer1 = await prisma.customer.create({
     data: {
       user: {
         create: {
+          id: await createFirebaseUser('Nguyễn Văn A', 'nguyenvana@gmail.com'),
           name: 'Nguyễn Văn A',
           email: 'nguyenvana@gmail.com',
           phoneNumber: '0123456780',
           type: UserType.Customer,
-          hashedPassword: password,
         },
       },
     },
@@ -30,11 +38,11 @@ async function seedDb() {
     data: {
       user: {
         create: {
+          id: await createFirebaseUser('Nguyễn Văn B', 'nguyenvanb@gmail.com'),
           name: 'Nguyễn Văn B',
           email: 'nguyenvanb@gmail.com',
           phoneNumber: '0123456781',
           type: UserType.Customer,
-          hashedPassword: password,
         },
       },
     },
@@ -44,14 +52,17 @@ async function seedDb() {
     data: {
       user: {
         create: {
+          id: await createFirebaseUser(
+            'Nguyễn Đơn Hàng',
+            'nguyendonhang@gmail.com',
+          ),
           name: 'Nguyễn Đơn Hàng',
           email: 'nguyendonhang@gmail.com',
           phoneNumber: '0123456782',
           type: UserType.Employee,
-          hashedPassword: password,
         },
       },
-      type: EmployeeType.OrderManager,
+      manageOrders: true,
     },
   });
 
@@ -59,14 +70,37 @@ async function seedDb() {
     data: {
       user: {
         create: {
+          id: await createFirebaseUser(
+            'Nguyễn Hàng Hóa',
+            'nguyenhanghoa@gmail.com',
+          ),
           name: 'Nguyễn Hàng Hóa',
           email: 'nguyenhanghoa@gmail.com',
           phoneNumber: '0123456783',
           type: UserType.Employee,
-          hashedPassword: password,
         },
       },
-      type: EmployeeType.InventoryManager,
+      manageInventory: true,
+    },
+  });
+
+  await prisma.employee.create({
+    data: {
+      user: {
+        create: {
+          id: await createFirebaseUser(
+            'Nguyễn Quản Lý',
+            'nguyenquanly@gmail.com',
+          ),
+          name: 'Nguyễn Quản Lý',
+          email: 'nguyenquanly@gmail.com',
+          phoneNumber: '0123456784',
+          type: UserType.Employee,
+        },
+      },
+      manageOrders: true,
+      manageInventory: true,
+      manageCustomers: true,
     },
   });
 
@@ -86,7 +120,18 @@ async function seedDb() {
 
   await prisma.product.create({
     data: {
-      name: 'Lays Potato',
+      name: 'Khoai tây Lays',
+      description: `Lay's Snack Khoai Tây số 1* Thế Giới nay đã chính thức có mặt tại Việt Nam
+      Trực thuộc tập đoàn danh tiếng PepsiCo, trong suốt hơn 86 tuổi đời,
+      Lay's đã không ngừng tiếp thu và phát triển để tối ưu hoá trải nghiệm vị giác
+      cho người dùng. Việc lắng nghe, tiếp thu ý kiến từ chính những khách hàng
+      thân yêu để không ngừng sáng tạo ra những hương vị thơm ngon độc đáo,
+      Lay's ngày nay đã thành công chinh phục khẩu vị của hàng triệu “tín đồ”
+      snack tại hơn 100 quốc gia với loạt hương vị nổi bật như Barbecue, Naturel,
+      Bicky Crisp, Barbecue Ham, Sour Cream and Onion, Alligator, Mountain Dew,
+      the 90's, Crispy Taco ...`,
+      imageUrl:
+        'https://abc-food-ordering.s3.ap-southeast-1.amazonaws.com/public/productImages/khoai-tay-lays.webp',
       category: {
         connect: { name: 'Snack' },
       },
@@ -97,7 +142,12 @@ async function seedDb() {
 
   await prisma.product.create({
     data: {
-      name: 'Bánh Bắp Ngọt',
+      name: 'Snack Bắp Ngọt',
+      description: `Với các công đoạn thu hoạch bắp, xay bắp, nướng bắp được
+      thực hiện một cách tỉ mỉ sẽ đảm bảo được độ giòn vừa ý, vị ngon đặc trưng của
+      Oishi Snack Bắp Ngọt. Hãy để Snack bắp đưa bạn vào xứ sở vui tươi và tự do.`,
+      imageUrl:
+        'https://abc-food-ordering.s3.ap-southeast-1.amazonaws.com/public/productImages/snack-bap-ngot.webp',
       category: {
         connect: { name: 'Snack' },
       },
@@ -108,7 +158,13 @@ async function seedDb() {
 
   await prisma.product.create({
     data: {
-      name: 'Milo',
+      name: 'Sữa Hộp Milo',
+      description: `Sữa lúa mạch Nestlé® MILO® tiếp sức nhà vô địch nhí
+      của mẹ với nguồn dinh dưỡng từ sữa, tăng cường nhờ công thức ACTIV-GO
+       từ Thụy Sĩ - là sự kết hợp độc đáo của PROTOMALT® chiết xuất từ
+       mầm lúa mạch cùng tổ hợp các vitamin và khoáng chất thiết yếu.`,
+      imageUrl:
+        'https://abc-food-ordering.s3.ap-southeast-1.amazonaws.com/public/productImages/sua-hop-milo.webp',
       category: {
         connect: { name: 'Sữa' },
       },
@@ -119,7 +175,10 @@ async function seedDb() {
 
   await prisma.product.create({
     data: {
-      name: 'Rau muống',
+      name: 'Rau muống tươi',
+      description: 'Rau muống tươi organic từ nông trại Đà Lạt',
+      imageUrl:
+        'https://abc-food-ordering.s3.ap-southeast-1.amazonaws.com/public/productImages/rau-muong.webp',
       category: {
         connect: { name: 'Rau củ' },
       },
@@ -135,19 +194,19 @@ async function seedDb() {
       items: {
         create: [
           {
-            product: { connect: { name: 'Lays Potato' } },
+            product: { connect: { name: 'Khoai tây Lays' } },
             quantity: 1,
             unitPrice: 10000,
             itemPrice: 10000,
           },
           {
-            product: { connect: { name: 'Milo' } },
+            product: { connect: { name: 'Sữa Hộp Milo' } },
             quantity: 1,
             unitPrice: 8000,
             itemPrice: 8000,
           },
           {
-            product: { connect: { name: 'Bánh Bắp Ngọt' } },
+            product: { connect: { name: 'Snack Bắp Ngọt' } },
             quantity: 2,
             unitPrice: 5000,
             itemPrice: 10000,
@@ -166,7 +225,7 @@ async function seedDb() {
       items: {
         create: [
           {
-            product: { connect: { name: 'Milo' } },
+            product: { connect: { name: 'Sữa Hộp Milo' } },
             quantity: 2,
             unitPrice: 8000,
             itemPrice: 16000,
@@ -186,7 +245,7 @@ async function seedDb() {
       items: {
         create: [
           {
-            product: { connect: { name: 'Rau muống' } },
+            product: { connect: { name: 'Rau muống tươi' } },
             quantity: 2,
             unitPrice: 8000,
             itemPrice: 16000,
@@ -201,7 +260,7 @@ async function seedDb() {
   await prisma.cartItem.create({
     data: {
       customer: { connect: { id: customer1.id } },
-      product: { connect: { name: 'Lays Potato' } },
+      product: { connect: { name: 'Khoai tây Lays' } },
       quantity: 1,
     },
   });
@@ -209,7 +268,7 @@ async function seedDb() {
   await prisma.cartItem.create({
     data: {
       customer: { connect: { id: customer1.id } },
-      product: { connect: { name: 'Rau muống' } },
+      product: { connect: { name: 'Rau muống tươi' } },
       quantity: 1,
     },
   });
@@ -217,7 +276,7 @@ async function seedDb() {
   await prisma.cartItem.create({
     data: {
       customer: { connect: { id: customer2.id } },
-      product: { connect: { name: 'Milo' } },
+      product: { connect: { name: 'Sữa Hộp Milo' } },
       quantity: 2,
     },
   });

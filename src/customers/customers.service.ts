@@ -1,15 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
-import { CreateCustomerDto } from './create-customer.dto';
-import { UsersService } from '../users/users.service';
+import { UpdateCustomerDto as UpdateCustomerDto } from './update-customer.dto';
 import { Customer, UserType } from '@prisma/client';
+import { getAuth } from 'firebase-admin/auth';
+import { AddNewCustomerDto as AddCustomerInfoDto } from './add-customer-info.dto';
 
 @Injectable()
 export class CustomersService {
-  constructor(
-    private prismaService: PrismaService,
-    private usersService: UsersService,
-  ) {}
+  constructor(private prismaService: PrismaService) {}
 
   async getCustomers() {
     return await this.prismaService.customer.findMany({
@@ -19,25 +17,63 @@ export class CustomersService {
     });
   }
 
-  async createCustomer(newCustomer: CreateCustomerDto): Promise<Customer> {
-    const hashedPassword = await this.usersService.hashPassword(
-      newCustomer.password,
-    );
+  /**
+   * Add info for a new customer with id
+   * that matches the corresponding Firebase user.
+   * @param firebaseUid Firebase user ID
+   * @param customerInfo Info of the new customer
+   * @returns Customer
+   */
+  async addCustomerInfo(
+    firebaseUid: string,
+    customerInfo: AddCustomerInfoDto,
+  ): Promise<Customer> {
+    const firebaseUser = await getAuth().getUser(firebaseUid);
+
+    if (!firebaseUser.email || !firebaseUser.displayName) {
+      throw new Error(
+        `Firebase user ${firebaseUid} lacks email or/and display name`,
+      );
+    }
+
     return await this.prismaService.customer.create({
       data: {
         user: {
           create: {
-            name: newCustomer.name,
-            email: newCustomer.email,
-            phoneNumber: newCustomer.phoneNumber,
+            id: firebaseUser.uid,
+            name: firebaseUser.displayName,
+            email: firebaseUser.email,
+            phoneNumber: customerInfo.phoneNumber,
             type: UserType.Customer,
-            hashedPassword: hashedPassword,
           },
         },
       },
-      include: {
-        user: true,
+      include: { user: true },
+    });
+  }
+
+  async updateCustomer(
+    customerId: string,
+    customer: UpdateCustomerDto,
+  ): Promise<Customer> {
+    const firebaseUser = await getAuth().updateUser(customerId, {
+      displayName: customer.name,
+      email: customer.email,
+      password: customer.password ? customer.password : undefined,
+    });
+
+    return await this.prismaService.customer.update({
+      where: { id: customerId },
+      data: {
+        user: {
+          update: {
+            name: firebaseUser.displayName,
+            email: firebaseUser.email,
+            phoneNumber: customer.phoneNumber,
+          },
+        },
       },
+      include: { user: true },
     });
   }
 }

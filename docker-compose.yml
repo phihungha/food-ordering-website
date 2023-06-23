@@ -1,16 +1,18 @@
 services:
-  nest-server:
-    container_name: fos-nest-server
+  abc-fos-server:
+    container_name: abc-fos-server
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - 3000:3000
+      - ${SERVER_PORT:-3000}:${SERVER_PORT:-3000}
+    environment:
+      - SERVER_PORT=${SERVER_PORT:-3000}
     depends_on:
-      - postgres-db
+      - abc-fos-db
 
-  postgres-db:
-    container_name: fos-postgres-db
+  abc-fos-db:
+    container_name: abc-fos-db
     image: postgres:15
     ports:
       - 5432:5432
@@ -19,4 +21,4 @@ services:
 
 volumes:
   db-data:
-    name: ${VOLUME_NAME:-fos-db-data}
+    name: ${VOLUME_NAME:-abc-fos-db-data}

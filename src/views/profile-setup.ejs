@@ -1,0 +1,27 @@
+<html lang="en">
+  <%- include('./common/head.ejs') %>
+
+  <body>
+    <%- include('./common/navbar.ejs') %>
+
+    <div class="main-container center-container">
+      <h1 class="title">Hãy thiết lập thêm thông tin</h1>
+      <form
+        action="/profile/setup"
+        method="post"
+        class="vertical-container auth-field-container"
+      >
+        <input
+          placeholder="Số điện thoại..."
+          required
+          type="tel"
+          pattern="0\d{9}"
+          name="phoneNumber"
+        />
+        <input class="submit-btn" type="submit" value="Cập nhật" />
+      </form>
+    </div>
+
+    <%- include('./common/footer.ejs') %>
+  </body>
+</html>

@@ -1,11 +1,15 @@
 services:
-  nest-server:
+  abc-fos-server:
     restart: always
+    environment:
+      - NODE_ENV=production
     env_file:
       - .env
+    volumes:
+      - ${HOME}/.aws:/root/.aws:ro
     command: npm run start:prod
 
-  postgres-db:
+  abc-fos-db:
     restart: always
     env_file:
       - .env

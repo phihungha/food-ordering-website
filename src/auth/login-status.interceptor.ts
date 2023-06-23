@@ -15,7 +15,9 @@ export class LoginStatusInterceptor implements NestInterceptor {
   ): Observable<any> {
     const request = context.switchToHttp().getRequest() as Request;
     const user = request.user;
-    const isSignedIn = user != null;
-    return next.handle().pipe(map((r) => ({ ...r, isSignedIn })));
+    const isSignedIn = user !== undefined;
+    return next
+      .handle()
+      .pipe(map((r) => ({ ...r, isSignedIn, currentUser: user })));
   }
 }

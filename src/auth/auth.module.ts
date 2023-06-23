@@ -1,39 +1,24 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { Global, MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UsersModule } from 'src/users/users.module';
-import { PassportModule } from '@nestjs/passport';
-import { LocalStrategy } from './local.strategy';
 import { CustomerAuthController } from './customer-auth.controller';
-import { JwtModule } from '@nestjs/jwt';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { AdminAuthController } from './admin-auth.controller';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { LoginStatusInterceptor } from './login-status.interceptor';
 import { AuthMiddleware } from './auth.middleware';
 
+@Global()
 @Module({
-  imports: [
-    UsersModule,
-    PassportModule,
-    JwtModule.registerAsync({
-      inject: [ConfigService],
-      useFactory: async (configService: ConfigService) => {
-        await ConfigModule.envVariablesLoaded;
-        return {
-          secret: configService.get<string>('JWT_SECRET'),
-          signOptions: { expiresIn: '24h' },
-        };
-      },
-    }),
-  ],
+  imports: [UsersModule],
   providers: [
     AuthService,
-    LocalStrategy,
     {
       provide: APP_INTERCEPTOR,
       useClass: LoginStatusInterceptor,
     },
   ],
-  controllers: [CustomerAuthController],
+  controllers: [CustomerAuthController, AdminAuthController],
+  exports: [AuthService],
 })
 export class AuthModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
